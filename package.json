@@ -1,0 +1,29 @@
+{
+  "name": "ai-for-impact",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@directus/sdk": "^21.2.0",
+    "date-fns": "^4.1.0",
+    "dompurify": "^3.3.3",
+    "marked": "^17.0.4",
+    "nuxt": "^4.4.2",
+    "nuxt-build-cache": "^0.1.1",
+    "nuxt-gtag": "^4.1.0",
+    "nuxt-lazy-hydrate": "^1.0.0",
+    "vue": "^3.5.30",
+    "vue-router": "^5.0.3"
+  },
+  "devDependencies": {
+    "@nuxt/test-utils": "^3.14.4",
+    "@types/fs-extra": "^11.0.4",
+    "netlify-plugin-cache": "^1.0.3"
+  }
+}
