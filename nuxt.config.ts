@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   },
   modules: ['nuxt-gtag', 'nuxt-build-cache', 'nuxt-lazy-hydrate'],
   nitro: {
+    preset: 'netlify',
     prerender: {
       crawlLinks: true,
       routes: ['/']
