@@ -45,7 +45,7 @@ const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
 <template>
   <div v-if="page" class="page">
 
-    <Banner />
+    <!-- <Banner /> -->
     <!-- Hero -->
     <!-- <section class="hero">
       <div class="container">
