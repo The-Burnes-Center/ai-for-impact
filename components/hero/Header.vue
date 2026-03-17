@@ -47,7 +47,6 @@ const logoUrl = computed(() =>
 .header {
   width: 100%;
   background-color: var(--color-dark);
-  border-bottom: 1.5px solid rgba(248, 246, 241, 0.15);
   padding: 20px 80px;
 }
 
@@ -105,6 +104,10 @@ const logoUrl = computed(() =>
   color: var(--color-accent);
 }
 
+.header__link:hover .header__icon {
+  filter: brightness(0) saturate(100%) invert(62%) sepia(52%) saturate(1041%) hue-rotate(193deg) brightness(102%) contrast(101%);
+}
+
 .header__link:hover::after {
   width: 100%;
 }
@@ -112,6 +115,7 @@ const logoUrl = computed(() =>
 .header__icon {
   width: 20px;
   height: 16px;
+  transition: filter 0.3s ease;
   flex-shrink: 0;
 }
 
