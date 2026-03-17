@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Banner from '~/components/hero/Banner.vue';
+
 const directus = useDirectus();
 const directusUrl = useRuntimeConfig().public.directusUrl as string;
 
@@ -42,8 +44,10 @@ const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
 
 <template>
   <div v-if="page" class="page">
+
+    <Banner />
     <!-- Hero -->
-    <section class="hero">
+    <!-- <section class="hero">
       <div class="container">
         <img
           v-if="page.logo"
@@ -52,6 +56,6 @@ const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
           class="hero__logo"
         />
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
