@@ -9,7 +9,23 @@ export default defineNuxtConfig({
       noExternal: ['@directus/sdk', 'date-fns'] 
     }
   },
+  css: ['~/assets/css/main.css'],
   modules: ['nuxt-gtag', 'nuxt-build-cache', 'nuxt-lazy-hydrate'],
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://use.typekit.net/htq7tpa.css',
+        },
+      ],
+    },
+  },
+  runtimeConfig: {
+    public: {
+      directusUrl: process.env.DIRECTUS_URL,
+    }
+  },
   nitro: {
     preset: 'netlify',
     prerender: {
