@@ -102,6 +102,17 @@ const aboutParagraphs = computed(() => {
           <UiPrimaryButton to="/team" variant="cream" icon="/images/arrow-right.svg"  min-width="249px">Meet the team</UiPrimaryButton>
         </div>
       </div>
+
+    </section>
+
+    <!-- Metrics -->
+    <section v-if="metrics.length" class="metrics">
+      <div class="metrics__grid">
+        <div v-for="metric in metrics" :key="metric.id" class="metrics__item">
+          <span class="metrics__value">{{ metric.value }}</span>
+          <div class="metrics__label" v-html="metric.label" />
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -232,6 +243,71 @@ const aboutParagraphs = computed(() => {
   color: var(--color-white);
 }
 
+.metrics {
+  background: linear-gradient(0deg, rgba(31, 45, 69, 0.5), rgba(31, 45, 69, 0.5)),
+    linear-gradient(0deg, #376BD1, #376BD1);
+  border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+  padding: 100px 80px;
+}
+
+.metrics__grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  text-align: center;
+}
+
+.metrics__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.metrics__value {
+  font-family: "freight-macro-pro", var(--font-text);
+  font-weight: 500;
+  font-size: 96px;
+  line-height: 90px;
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--color-cream);
+}
+
+.metrics__label {
+  text-align: center;
+  color: var(--color-cream);
+}
+
+.metrics__label :deep(h3) {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 46px;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.metrics__label :deep(h3 em) {
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 49px;
+  line-height: 46px;
+  letter-spacing: 0;
+}
+
+.metrics__label :deep(p) {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0;
+  margin: 30px 0 0;
+}
+
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
@@ -253,6 +329,15 @@ const aboutParagraphs = computed(() => {
 
   .team__text {
     padding: 40px 1.5rem;
+  }
+
+  .metrics {
+    padding: 40px 1.5rem;
+  }
+
+  .metrics__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
 </style>
