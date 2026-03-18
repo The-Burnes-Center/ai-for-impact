@@ -13,6 +13,7 @@ const { data: page } = await useAsyncData('ai-for-impact', () =>
         'logo',
         'syllabus',
         'latest_report',
+        'team_image',
         { projects: [{ ai_for_impact_projects_id: ['*'] }] },
         { highlights: [{ ai_for_impact_highlights_id: ['*'] }] },
         { metrics: [{ ai_for_impact_metrics_id: ['*'] }] },
@@ -40,6 +41,11 @@ const metrics = computed(() =>
 );
 
 const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
+
+const aboutParagraphs = computed(() => {
+  const html = page.value?.about || '';
+  return html.split('</p>').filter(s => s.trim()).map(s => s.trim() + '</p>');
+});
 </script>
 
 <template>
@@ -67,6 +73,36 @@ const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
         </div>
       </div>
     </section>
+
+    <!-- About -->
+    <section class="about">
+      <div class="about__content">
+        <h2 class="about__title">About AI <span class="about_italics">for</span> Impact</h2>
+        <div class="about__columns">
+          <div
+            v-for="(para, i) in aboutParagraphs"
+            :key="i"
+            class="about__col"
+            v-html="para"
+          />
+        </div>
+      </div>
+
+      <div class="team">
+        <div class="team__image-wrapper">
+          <img
+            v-if="page.team_image"
+            :src="assetUrl(page.team_image)"
+            alt="AI for Impact team"
+            class="team__image"
+          />
+        </div>
+        <div class="team__text">
+          <div class="team__description" v-html="page.about_team" />
+          <UiPrimaryButton to="/team" variant="cream" icon="/images/arrow-right.svg"  min-width="249px">Meet the team</UiPrimaryButton>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -75,7 +111,7 @@ const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
   width: 100%;
   min-height: 650px;
   background-color: var(--color-dark);
-  padding: 40px 40px;
+  padding: 40px;
   display: flex;
   align-items: center;
 }
@@ -90,28 +126,132 @@ const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
   padding: 0 10px;
 }
 
-.hero__about {
-  font-family: var(--font-text);
-  font-size: 1.25rem;
-  line-height: 1.8;
-  color: var(--color-cream);
-}
-
-.hero__about :deep(p) {
-  margin: 0 0 1rem;
-}
-
 .hero__actions {
   display: flex;
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
-  margin-top: 20px 0px 0px 10px;
+  margin-top: 20px;
+}
+
+.about {
+  background-color: var(--color-cream);
+  margin-top: 80px;
+}
+
+.about__content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 70px 40px;
+}
+
+.about__title {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 46px;
+  letter-spacing: 0;
+  color: var(--color-dark);
+  margin: 0 0 40px;
+}
+
+.about_italics {
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 49px;
+  line-height: 46px;
+  letter-spacing: 0;
+  color: var(--color-primary);
+}
+
+.about__columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.about__col :deep(p) {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.team {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  margin-top: 30px;
+  overflow: hidden;
+}
+
+.team__image-wrapper {
+  overflow: hidden;
+}
+
+.team__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team__text {
+  background-color: var(--color-primary);
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.team__description {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0;
+  color: var(--color-cream);
+}
+
+.team__description :deep(p) {
+  margin: 0;
+}
+
+.team__description :deep(a) {
+  color: var(--color-cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.team__description :deep(a:hover) {
+  color: var(--color-white);
 }
 
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
+    padding: 40px 1.5rem;
+  }
+
+  .about__content {
+    padding: 40px 1.5rem;
+  }
+
+  .about__columns {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .team {
+    grid-template-columns: 1fr;
+  }
+
+  .team__text {
     padding: 40px 1.5rem;
   }
 }
