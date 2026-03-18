@@ -124,6 +124,9 @@ const aboutParagraphs = computed(() => {
         </div>
       </div>
     </section>
+
+    
+    
   </div>
 </template>
 

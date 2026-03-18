@@ -1,21 +1,38 @@
 <template>
-  <component
-    :is="to ? resolveComponent('NuxtLink') : href ? 'a' : 'button'"
+  <NuxtLink
+    v-if="to"
     :to="to"
-    :href="href"
-    :target="href ? '_blank' : undefined"
-    :rel="href ? 'noopener' : undefined"
     class="btn"
     :class="`btn--${variant}`"
     :style="{ '--btn-min-width': props.minWidth }"
   >
     <img :src="icon" alt="" class="btn__icon" />
     <span class="btn__text"><slot /></span>
-  </component>
+  </NuxtLink>
+  <a
+    v-else-if="href"
+    :href="href"
+    target="_blank"
+    rel="noopener"
+    class="btn"
+    :class="`btn--${variant}`"
+    :style="{ '--btn-min-width': props.minWidth }"
+  >
+    <img :src="icon" alt="" class="btn__icon" />
+    <span class="btn__text"><slot /></span>
+  </a>
+  <button
+    v-else
+    class="btn"
+    :class="`btn--${variant}`"
+    :style="{ '--btn-min-width': props.minWidth }"
+  >
+    <img :src="icon" alt="" class="btn__icon" />
+    <span class="btn__text"><slot /></span>
+  </button>
 </template>
 
 <script setup lang="ts">
-import { resolveComponent } from 'vue';
 
 const props = withDefaults(defineProps<{
   to?: string;
@@ -90,6 +107,10 @@ const props = withDefaults(defineProps<{
 
 .btn--cream .btn__text {
   color: var(--color-cream);
+}
+
+.btn--cream .btn__icon {
+  filter: brightness(0) invert(1);
 }
 
 .btn--cream:hover {

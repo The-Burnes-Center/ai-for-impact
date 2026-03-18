@@ -5,6 +5,8 @@
     <main>
       <slot />
     </main>
+    <SiteFooter />
+    <HeroBanner />
   </div>
 </template>
 
