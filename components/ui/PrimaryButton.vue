@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
   href?: string;
   icon?: string;
   minWidth?: string;
-  variant?: 'accent' | 'cream';
+  variant?: 'accent' | 'cream' | 'primary';
 }>(), {
   icon: '/images/icon.svg',
   minWidth: '298px',
@@ -102,5 +102,30 @@ const props = withDefaults(defineProps<{
 
 .btn--cream:hover .btn__icon {
   filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(1000%) hue-rotate(185deg) brightness(95%) contrast(95%);
+}
+
+/* Primary variant */
+.btn--primary {
+  border: 1.5px solid var(--color-primary);
+}
+
+.btn--primary .btn__text {
+  color: var(--color-primary);
+}
+
+.btn--primary .btn__icon {
+  filter: brightness(0) saturate(100%) invert(32%) sepia(93%) saturate(600%) hue-rotate(200deg) brightness(90%) contrast(90%);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary);
+}
+
+.btn--primary:hover .btn__text {
+  color: var(--color-cream);
+}
+
+.btn--primary:hover .btn__icon {
+  filter: brightness(0) saturate(100%) invert(97%) sepia(5%) saturate(500%) hue-rotate(340deg) brightness(104%) contrast(96%);
 }
 </style>

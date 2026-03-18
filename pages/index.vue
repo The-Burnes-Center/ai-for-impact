@@ -114,6 +114,16 @@ const aboutParagraphs = computed(() => {
         </div>
       </div>
     </section>
+
+    <!-- Highlights -->
+    <section v-if="highlights.length" class="highlights-section">
+      <div class="highlights-section__content">
+        <UiHighlightsCarousel :highlights="highlights" />
+        <div class="highlights-section__action">
+          <UiPrimaryButton to="/products" variant="primary" icon="/images/arrow-right.svg" min-width="298px">Explore all projects</UiPrimaryButton>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -308,6 +318,21 @@ const aboutParagraphs = computed(() => {
   margin: 30px 0 0;
 }
 
+.highlights-section {
+  background-color: var(--color-cream);
+  padding: 100px 80px 60px;
+  border-bottom: 1.5px solid rgba(31, 45, 69, 0.15);
+}
+
+.highlights-section__content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
@@ -338,6 +363,10 @@ const aboutParagraphs = computed(() => {
   .metrics__grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .highlights-section {
+    padding: 40px 1.5rem;
   }
 }
 </style>
