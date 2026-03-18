@@ -125,24 +125,19 @@ const reportUrl = computed(() =>
 
 .footer__logo {
   width: 197px;
+  max-width: 100%;
   height: 50px;
   object-fit: contain;
 }
 
 @media (max-width: 768px) {
   .footer__main {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 40px 1.5rem;
+    flex-direction: column;
+    padding: 40px 20px;
   }
 
   .footer__logos {
-    grid-template-columns: 1fr 1fr;
     gap: 20px;
-  }
-
-  .footer__logo {
-    height: 40px;
   }
 }
 </style>

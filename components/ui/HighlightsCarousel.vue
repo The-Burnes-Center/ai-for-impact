@@ -6,13 +6,22 @@ const props = defineProps<{
 }>();
 
 const activeIndex = ref(0);
-const perPage = 2;
+const isMobile = ref(false);
 
-const totalPages = computed(() => Math.ceil(props.highlights.length / perPage));
+if (import.meta.client) {
+  const checkMobile = () => { isMobile.value = window.innerWidth <= 768; };
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
+}
+
+const perPage = computed(() => isMobile.value ? 1 : 2);
+const totalPages = computed(() => Math.ceil(props.highlights.length / perPage.value));
 
 const visibleHighlights = computed(() =>
-  props.highlights.slice(activeIndex.value * perPage, activeIndex.value * perPage + perPage)
+  props.highlights.slice(activeIndex.value * perPage.value, activeIndex.value * perPage.value + perPage.value)
 );
+
+watch(perPage, () => { activeIndex.value = 0; });
 
 const next = () => {
   activeIndex.value = (activeIndex.value + 1) % totalPages.value;
@@ -136,6 +145,21 @@ const prev = () => {
   .highlights__slide {
     flex-direction: column;
     gap: 30px;
+  }
+
+  .highlights__desc {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .highlights__desc :deep(em) {
+    font-size: 28px;
+    line-height: 30px;
+  }
+
+  .highlights__org {
+    font-size: 16px;
+    line-height: 22px;
   }
 }
 </style>

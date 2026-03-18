@@ -15,33 +15,97 @@ const { data: site } = await useAsyncData('header-logo', () =>
 const logoUrl = computed(() =>
   site.value?.logo ? `${API_URL}/assets/${site.value.logo}` : ''
 );
+
+const mobileMenuOpen = ref(false);
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="{ 'header--open': mobileMenuOpen }">
     <div class="header__inner">
-      <NuxtLink to="/" class="header__logo">
+      <NuxtLink v-if="!mobileMenuOpen" to="/" class="header__logo">
         <img v-if="logoUrl" :src="logoUrl" alt="AI for Impact" class="header__logo-img" />
       </NuxtLink>
+
+      <!-- Desktop nav -->
       <nav class="header__nav">
-        <NuxtLink to="/products" class="header__link">
+        <NuxtLink to="#" class="header__link">
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Products
         </NuxtLink>
-        <NuxtLink to="/our-team" class="header__link">
+        <NuxtLink to="https://burnes.northeastern.edu/our-team/" class="header__link">
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Our Team
         </NuxtLink>
-        <a href="https://innovate-us.org/workshops" target="_blank" rel="noopener" class="header__link">
+        <a href="https://burnes.northeastern.edu/upcoming-events/" target="_blank" rel="noopener" class="header__link">
           <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
           Events
         </a>
-        <a href="https://innovate-us.org/comms" target="_blank" rel="noopener" class="header__link">
+        <a href="https://burnes.northeastern.edu/news/" target="_blank" rel="noopener" class="header__link">
           <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
           News
         </a>
       </nav>
+
+      <!-- Mobile hamburger -->
+      <button class="header__hamburger" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Toggle menu">
+        <svg
+          v-if="!mobileMenuOpen"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          style="fill: #ffffff"
+          aria-hidden="true"
+        >
+          <path
+            d="M3 6H21M3 12H21M3 18H21"
+            stroke="white"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <svg
+          v-else
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 5L19 19M5 19L19 5"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
     </div>
+
+    <!-- Mobile menu -->
+    <Transition name="menu-slide">
+    <nav v-if="mobileMenuOpen" class="header__mobile-nav">
+      <NuxtLink to="/products" class="header__mobile-link" @click="mobileMenuOpen = false">
+        <img src="/images/arrow-right.svg" alt="" class="header__icon" />
+        Products
+      </NuxtLink>
+      <NuxtLink to="https://burnes.northeastern.edu/our-team/" class="header__mobile-link" @click="mobileMenuOpen = false">
+        <img src="/images/arrow-right.svg" alt="" class="header__icon" />
+        Our Team
+      </NuxtLink>
+      <a href="https://burnes.northeastern.edu/upcoming-events/" target="_blank" rel="noopener" class="header__mobile-link">
+        <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
+        Events
+      </a>
+      <a href="https://burnes.northeastern.edu/news/" target="_blank" rel="noopener" class="header__mobile-link">
+        <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
+        News
+      </a>
+    </nav>
+    </Transition>
   </header>
 </template>
 
@@ -50,6 +114,10 @@ const logoUrl = computed(() =>
   width: 100%;
   background-color: var(--color-dark);
   padding: 20px 80px;
+}
+
+.header--open {
+  background-color: var(--color-primary);
 }
 
 .header__inner {
@@ -74,6 +142,18 @@ const logoUrl = computed(() =>
   display: flex;
   align-items: center;
   gap: 40px;
+}
+
+.header__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.header__mobile-nav {
+  display: none;
 }
 
 .header__link {
@@ -126,18 +206,83 @@ const logoUrl = computed(() =>
   height: 14px;
 }
 
+.header__mobile-link {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  color: var(--color-cream);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  animation: slideFromRight 0.4s ease both;
+}
+
+.header__mobile-link:nth-child(1) { animation-delay: 0.05s; }
+.header__mobile-link:nth-child(2) { animation-delay: 0.1s; }
+.header__mobile-link:nth-child(3) { animation-delay: 0.15s; }
+.header__mobile-link:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @media (max-width: 768px) {
   .header {
-    padding: 0 1.5rem;
+    padding: 15px 1.5rem;
+  }
+
+  .header--open {
+    position: fixed;
+    top: 45px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    overflow-y: auto;
   }
 
   .header__nav {
-    gap: 20px;
+    display: none;
   }
 
-  .header__link {
-    font-size: 16px;
-    line-height: 22px;
+  .header__hamburger {
+    display: block;
+    z-index: 1001;
   }
+
+  .header__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+  }
+}
+
+.menu-slide-enter-active {
+  transition: all 0.4s ease;
+}
+
+.menu-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.menu-slide-enter-from {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.menu-slide-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
 }
 </style>

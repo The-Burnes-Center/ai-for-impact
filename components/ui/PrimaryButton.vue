@@ -149,4 +149,23 @@ const props = withDefaults(defineProps<{
 .btn--primary:hover .btn__icon {
   filter: brightness(0) saturate(100%) invert(97%) sepia(5%) saturate(500%) hue-rotate(340deg) brightness(104%) contrast(96%);
 }
+
+@media (max-width: 768px) {
+  .btn {
+    min-width: auto;
+    height: auto;
+    padding: 14px 20px;
+    gap: 8px;
+  }
+
+  .btn__text {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .btn__icon {
+    width: 20px;
+    height: 20px;
+  }
+}
 </style>

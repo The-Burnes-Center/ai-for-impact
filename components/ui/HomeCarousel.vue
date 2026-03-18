@@ -206,15 +206,51 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 }
 
 @media (max-width: 768px) {
-  .carousel__slide {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 24px;
+  .carousel {
+    gap: 10px;
+  }
+
+  .carousel__arrow {
+    padding: 5px;
   }
 
   .carousel__arrow-icon {
     width: 18px;
     height: 18px;
+  }
+
+  .carousel__slide {
+    grid-template-columns: 1fr;
+    gap: 20px 10px;
+    height: auto;
+    padding: 20px;
+  }
+
+  .carousel__image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .carousel__image {
+    height: auto;
+    width: 100%;
+    max-height: none;
+  }
+
+
+  .carousel__desc {
+    line-height: 28px;
+    -webkit-line-clamp: 8;
+  }
+
+  .carousel__dots {
+    padding: 15px 0;
+  }
+
+  .carousel__dot {
+    width: 8px;
+    height: 8px;
   }
 }
 </style>
