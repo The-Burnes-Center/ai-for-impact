@@ -61,13 +61,14 @@ const reportUrl = computed(() =>
 <style scoped>
 .footer {
   background-color: var(--color-dark);
+  margin-top: 80px;
 }
 
 .footer__main {
   max-width: var(--max-width);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   gap: 80px;
   padding: 80px;
 }
@@ -77,6 +78,7 @@ const reportUrl = computed(() =>
   flex-direction: column;
   align-items: flex-start;
   gap: 40px;
+  max-width: 600px;
 }
 
 .footer__text {
@@ -85,6 +87,7 @@ const reportUrl = computed(() =>
   font-size: 18px;
   line-height: 24px;
   letter-spacing: 0;
+  text-wrap: balance;
   color: var(--color-cream);
   margin: 0;
 }
