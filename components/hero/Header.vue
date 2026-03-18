@@ -1,6 +1,8 @@
 <script setup lang="ts">
-const directus = useDirectus();
-const directusUrl = useRuntimeConfig().public.directusUrl as string;
+import { createDirectus, rest, readItem } from '@directus/sdk';
+
+const API_URL = 'https://directus.theburnescenter.org';
+const directus = createDirectus(API_URL).with(rest());
 
 const { data: site } = await useAsyncData('header-logo', () =>
   directus.request(
@@ -11,7 +13,7 @@ const { data: site } = await useAsyncData('header-logo', () =>
 );
 
 const logoUrl = computed(() =>
-  site.value?.logo ? `${directusUrl}/assets/${site.value.logo}` : ''
+  site.value?.logo ? `${API_URL}/assets/${site.value.logo}` : ''
 );
 </script>
 

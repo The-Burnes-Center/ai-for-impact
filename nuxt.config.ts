@@ -21,11 +21,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-  runtimeConfig: {
-    public: {
-      directusUrl: process.env.DIRECTUS_URL,
-    }
-  },
   nitro: {
     preset: 'netlify',
     prerender: {

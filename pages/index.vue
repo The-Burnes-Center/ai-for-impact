@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Banner from '~/components/hero/Banner.vue';
+import { createDirectus, rest, readItem } from '@directus/sdk';
 
-const directus = useDirectus();
-const directusUrl = useRuntimeConfig().public.directusUrl as string;
+const API_URL = 'https://directus.theburnescenter.org';
+const directus = createDirectus(API_URL).with(rest());
 
 const { data: page } = await useAsyncData('ai-for-impact', () =>
   directus.request(
@@ -39,7 +39,7 @@ const metrics = computed(() =>
     .filter((m: any) => m?.status === 'published') ?? []
 );
 
-const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
+const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
 </script>
 
 <template>
@@ -47,7 +47,14 @@ const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
     <!-- Hero -->
     <section class="hero">
       <div class="hero__content">
-        <div class="hero__about" v-html="page.about" />
+
+        <!-- Project Carousel -->
+        <UiHomeCarousel
+          v-if="projects.length"
+          :projects="projects"
+          :directus-url="API_URL"
+        />
+
         <div class="hero__actions">
           <UiPrimaryButton to="/products">Explore all projects</UiPrimaryButton>
           <UiPrimaryButton
@@ -68,7 +75,7 @@ const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
   width: 100%;
   min-height: 650px;
   background-color: var(--color-dark);
-  padding: 70px 40px;
+  padding: 40px 40px;
   display: flex;
   align-items: center;
 }
@@ -80,6 +87,7 @@ const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 0 10px;
 }
 
 .hero__about {
@@ -95,9 +103,10 @@ const assetUrl = (id: string) => `${directusUrl}/assets/${id}`;
 
 .hero__actions {
   display: flex;
+  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 20px 0px 0px 10px;
 }
 
 @media (max-width: 768px) {
