@@ -88,7 +88,7 @@ const mobileMenuOpen = ref(false);
     <!-- Mobile menu -->
     <Transition name="menu-slide">
     <nav v-if="mobileMenuOpen" class="header__mobile-nav">
-      <NuxtLink to="/products" class="header__mobile-link" @click="mobileMenuOpen = false">
+      <NuxtLink to="#" class="header__mobile-link" @click="mobileMenuOpen = false">
         <img src="/images/arrow-right.svg" alt="" class="header__icon" />
         Products
       </NuxtLink>

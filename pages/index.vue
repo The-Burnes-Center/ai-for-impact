@@ -62,7 +62,7 @@ const aboutParagraphs = computed(() => {
         />
 
         <div class="hero__actions">
-          <UiPrimaryButton to="/products">Explore all projects</UiPrimaryButton>
+          <UiPrimaryButton to="#">Explore all projects</UiPrimaryButton>
           <UiPrimaryButton
             v-if="page.latest_report"
             :href="assetUrl(page.latest_report)"
@@ -99,7 +99,7 @@ const aboutParagraphs = computed(() => {
         </div>
         <div class="team__text">
           <div class="team__description" v-html="page.about_team" />
-          <UiPrimaryButton to="/team" variant="cream" icon="/images/arrow-right.svg"  min-width="249px">Meet the team</UiPrimaryButton>
+          <UiPrimaryButton href="https://burnes.northeastern.edu/our-team/" variant="cream" icon="/images/arrow-right.svg" min-width="249px">Meet the team</UiPrimaryButton>
         </div>
       </div>
 
@@ -120,7 +120,7 @@ const aboutParagraphs = computed(() => {
       <div class="highlights-section__content">
         <UiHighlightsCarousel :highlights="highlights" />
         <div class="highlights-section__action">
-          <UiPrimaryButton to="/products" variant="primary" icon="/images/arrow-right.svg" min-width="298px">Explore all projects</UiPrimaryButton>
+          <UiPrimaryButton to="#" variant="primary" icon="/images/arrow-right.svg" min-width="298px">Explore all projects</UiPrimaryButton>
         </div>
       </div>
     </section>
