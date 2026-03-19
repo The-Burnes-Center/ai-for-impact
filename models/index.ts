@@ -5,6 +5,8 @@ export interface Project {
   project_title: string;
   project_description: string;
   subtitle: string;
+  authors: string;
+  repo_link: string;
 }
 
 export interface Highlight {

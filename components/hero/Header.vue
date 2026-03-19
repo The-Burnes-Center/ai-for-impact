@@ -22,7 +22,7 @@ const mobileMenuOpen = ref(false);
 
       <!-- Desktop nav -->
       <nav class="header__nav">
-        <NuxtLink to="#" class="header__link">
+        <NuxtLink to="/product" class="header__link">
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Products
         </NuxtLink>
@@ -50,7 +50,7 @@ const mobileMenuOpen = ref(false);
     <!-- Mobile menu -->
     <Transition name="menu-slide">
     <nav v-if="mobileMenuOpen" class="header__mobile-nav">
-      <NuxtLink to="#" class="header__mobile-link" @click="mobileMenuOpen = false">
+      <NuxtLink to="/product" class="header__mobile-link" @click="mobileMenuOpen = false">
         <img src="/images/arrow-right.svg" alt="" class="header__icon" />
         Products
       </NuxtLink>
