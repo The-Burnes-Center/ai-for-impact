@@ -53,6 +53,7 @@ const { data: projects } = await useAsyncData('all-projects', fetchAllProjects);
   .product-page__grid {
     grid-template-columns: 1fr;
     gap: 30px;
+    padding: 20px;
   }
 
   .card {
