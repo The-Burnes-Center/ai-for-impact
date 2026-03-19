@@ -143,7 +143,7 @@ const isOpen = ref(false);
 .banner__dropdown {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   padding: 12px 20px;
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.15);
   animation: slideDown 0.3s ease;
