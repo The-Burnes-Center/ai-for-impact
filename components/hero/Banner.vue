@@ -1,4 +1,8 @@
-<script setup>
+<script setup lang="ts">
+const props = withDefaults(defineProps<{
+  position?: 'top' | 'bottom';
+}>(), { position: 'top' });
+
 const isOpen = ref(false);
 </script>
 
@@ -29,9 +33,9 @@ const isOpen = ref(false);
     <div class="banner__mobile">
       <button v-if="!isOpen" class="banner__toggle" @click="isOpen = true">
         <span class="banner__label">See our partner projects</span>
-        <img src="/images/arrow-down.svg" alt="" class="banner__arrow" />
+        <img src="/images/arrow-down.svg" alt="" class="banner__arrow" :class="{ 'banner__arrow--up': position === 'bottom' }" />
       </button>
-      <div v-if="isOpen" class="banner__dropdown" @click="isOpen = false">
+      <div v-if="isOpen" class="banner__dropdown" :class="{ 'banner__dropdown--reverse': position === 'bottom' }" @click="isOpen = false">
         <span class="banner__dropdown-header">
           <span class="banner__label">See our partner projects</span>
           <img src="/images/arrow-down.svg" alt="" class="banner__arrow banner__arrow--open" />
@@ -132,6 +136,10 @@ const isOpen = ref(false);
   transform: rotate(180deg);
 }
 
+.banner__arrow--up {
+  transform: rotate(180deg);
+}
+
 .banner__dropdown {
   display: flex;
   flex-direction: column;
@@ -140,6 +148,15 @@ const isOpen = ref(false);
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.15);
   animation: slideDown 0.3s ease;
   cursor: pointer;
+}
+
+.banner__dropdown--reverse {
+  flex-direction: column-reverse;
+  animation: slideUp 0.4s ease;
+}
+
+.banner__dropdown--reverse .banner__arrow--open {
+  transform: rotate(0deg);
 }
 
 .banner__dropdown-header {
@@ -153,6 +170,17 @@ const isOpen = ref(false);
   from {
     opacity: 0;
     transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
     opacity: 1;

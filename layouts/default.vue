@@ -6,7 +6,7 @@
       <slot />
     </main>
     <SiteFooter />
-    <HeroBanner />
+    <HeroBanner position="bottom" />
   </div>
 </template>
 
