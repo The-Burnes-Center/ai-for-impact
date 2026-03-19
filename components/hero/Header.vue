@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import { createDirectus, rest, readItem } from '@directus/sdk';
-
-const API_URL = 'https://directus.theburnescenter.org';
-const directus = createDirectus(API_URL).with(rest());
+import { directus, assetUrl } from '~/utils/directus';
+import { readItem } from '@directus/sdk';
 
 const { data: site } = await useAsyncData('header-logo', () =>
-  directus.request(
-    readItem('ai_for_impact', 1, {
-      fields: ['logo'],
-    })
-  )
+  directus.request(readItem('ai_for_impact', 1, { fields: ['logo'] }))
 );
 
 const logoUrl = computed(() =>
-  site.value?.logo ? `${API_URL}/assets/${site.value.logo}` : ''
+  site.value?.logo ? assetUrl(site.value.logo) : ''
 );
 
 const mobileMenuOpen = ref(false);

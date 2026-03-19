@@ -1,19 +1,13 @@
 <script setup>
-import { createDirectus, rest, readItem } from '@directus/sdk';
-
-const API_URL = 'https://directus.theburnescenter.org';
-const directus = createDirectus(API_URL).with(rest());
+import { directus, assetUrl } from '~/utils/directus';
+import { readItem } from '@directus/sdk';
 
 const { data: site } = useAsyncData('footer-data', () =>
-  directus.request(
-    readItem('ai_for_impact', 1, {
-      fields: ['latest_report'],
-    })
-  )
+  directus.request(readItem('ai_for_impact', 1, { fields: ['latest_report'] }))
 );
 
 const reportUrl = computed(() =>
-  site.value?.latest_report ? `${API_URL}/assets/${site.value.latest_report}` : null
+  site.value?.latest_report ? assetUrl(site.value.latest_report) : null
 );
 </script>
 
@@ -33,7 +27,7 @@ const reportUrl = computed(() =>
           icon="/images/arrow-down.svg"
           min-width="auto"
         >
-          Download our latest report
+          Get our latest report
         </UiPrimaryButton>
       </div>
 
@@ -124,20 +118,41 @@ const reportUrl = computed(() =>
 }
 
 .footer__logo {
-  width: 197px;
-  max-width: 100%;
   height: 50px;
   object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+  .footer__main {
+    gap: 40px;
+    padding: 60px 40px;
+  }
+
+  .footer__logos {
+    gap: 24px;
+  }
 }
 
 @media (max-width: 768px) {
   .footer__main {
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     padding: 40px 20px;
   }
 
+  .footer__left {
+    align-items: center;
+  }
+
   .footer__logos {
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    justify-items: center;
+  }
+
+  .footer__logo {
+    width: 203px;
   }
 }
 </style>

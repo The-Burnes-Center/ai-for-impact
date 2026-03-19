@@ -1,51 +1,16 @@
 <script setup lang="ts">
-import { createDirectus, rest, readItem } from '@directus/sdk';
+import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl, API_URL } from '~/utils/directus';
 
-const API_URL = 'https://directus.theburnescenter.org';
-const directus = createDirectus(API_URL).with(rest());
+const { data: page } = await useAsyncData('ai-for-impact', fetchAiForImpact);
+const { data: projectCount } = await useAsyncData('project-count', fetchProjectCount);
 
-const { data: page } = await useAsyncData('ai-for-impact', () =>
-  directus.request(
-    readItem('ai_for_impact', 1, {
-      fields: [
-        'about',
-        'about_team',
-        'logo',
-        'syllabus',
-        'latest_report',
-        'team_image',
-        { projects: [{ ai_for_impact_projects_id: ['*'] }] },
-        { highlights: [{ ai_for_impact_highlights_id: ['*'] }] },
-        { metrics: [{ ai_for_impact_metrics_id: ['*'] }] },
-      ],
-    })
-  )
+const projects = computed(() => filterPublished(page.value?.projects, 'ai_for_impact_projects_id'));
+const highlights = computed(() => filterPublished(page.value?.highlights, 'ai_for_impact_highlights_id'));
+const metrics = computed(() => filterPublished(page.value?.metrics, 'ai_for_impact_metrics_id'));
+
+const aboutParagraphs = computed(() =>
+  (page.value?.about || '').split('</p>').filter((s: string) => s.trim()).map((s: string) => s.trim() + '</p>')
 );
-
-const projects = computed(() =>
-  page.value?.projects
-    ?.map((p: any) => p.ai_for_impact_projects_id)
-    .filter((p: any) => p?.status === 'published') ?? []
-);
-
-const highlights = computed(() =>
-  page.value?.highlights
-    ?.map((h: any) => h.ai_for_impact_highlights_id)
-    .filter((h: any) => h?.status === 'published') ?? []
-);
-
-const metrics = computed(() =>
-  page.value?.metrics
-    ?.map((m: any) => m.ai_for_impact_metrics_id)
-    .filter((m: any) => m?.status === 'published') ?? []
-);
-
-const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
-
-const aboutParagraphs = computed(() => {
-  const html = page.value?.about || '';
-  return html.split('</p>').filter(s => s.trim()).map(s => s.trim() + '</p>');
-});
 </script>
 
 <template>
@@ -109,7 +74,7 @@ const aboutParagraphs = computed(() => {
     <section v-if="metrics.length" class="metrics">
       <div class="metrics__grid">
         <div v-for="metric in metrics" :key="metric.id" class="metrics__item">
-          <span class="metrics__value">{{ metric.value }}</span>
+          <span class="metrics__value">{{ metric.id === 2 ? projectCount : metric.value }}</span>
           <div class="metrics__label" v-html="metric.label" />
         </div>
       </div>
