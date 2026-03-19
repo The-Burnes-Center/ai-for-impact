@@ -96,7 +96,7 @@ const mobileMenuOpen = ref(false);
 }
 
 .header__logo-img {
-  height: 36px;
+  height: 50px;
   width: auto;
 }
 
