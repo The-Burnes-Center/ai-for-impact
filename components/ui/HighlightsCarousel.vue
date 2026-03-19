@@ -56,9 +56,10 @@ const prev = () => {
 <style scoped>
 .highlights {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 40px;
   width: 100%;
+  position: relative;
 }
 
 .highlights__arrow {
@@ -67,6 +68,7 @@ const prev = () => {
   cursor: pointer;
   padding: 10px;
   flex-shrink: 0;
+  margin-top: 80px;
 }
 
 .highlights__arrow-icon {
@@ -141,7 +143,21 @@ const prev = () => {
   margin: 0;
 }
 
+@media (max-width: 1024px) {
+  .highlights__arrow {
+    margin-top: 60px;
+  }
+}
+
 @media (max-width: 768px) {
+  .highlights {
+    gap: 20px;
+  }
+
+  .highlights__arrow {
+    margin-top: 40px;
+  }
+
   .highlights__slide {
     flex-direction: column;
     gap: 30px;
