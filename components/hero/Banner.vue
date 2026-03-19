@@ -6,7 +6,7 @@ const isOpen = ref(false);
   <div class="banner">
     <!-- Desktop view -->
     <div class="banner__desktop">
-      <span class="banner__label">This is a partner project of:</span>
+      <span class="banner__label">See our partner projects</span>
       <a href="https://innovate-us.org" target="_blank" rel="noopener" class="banner__link">
         <img src="/images/arrow.svg" alt="" class="banner__icon" />
         InnovateUS
@@ -27,23 +27,22 @@ const isOpen = ref(false);
 
     <!-- Mobile view -->
     <div class="banner__mobile">
-      <button class="banner__toggle" @click="isOpen = !isOpen">
-        <span class="banner__label">This is a partner project of:</span>
-        <img
-          src="/images/arrow-down.svg"
-          alt=""
-          class="banner__arrow"
-          :class="{ 'banner__arrow--open': isOpen }"
-        />
+      <button v-if="!isOpen" class="banner__toggle" @click="isOpen = true">
+        <span class="banner__label">See our partner projects</span>
+        <img src="/images/arrow-down.svg" alt="" class="banner__arrow" />
       </button>
-      <div v-if="isOpen" class="banner__dropdown">
+      <div v-if="isOpen" class="banner__dropdown" @click="isOpen = false">
+        <span class="banner__dropdown-header">
+          <span class="banner__label">See our partner projects</span>
+          <img src="/images/arrow-down.svg" alt="" class="banner__arrow banner__arrow--open" />
+        </span>
         <a href="https://innovate-us.org" target="_blank" rel="noopener" class="banner__link">
           <img src="/images/arrow.svg" alt="" class="banner__icon" />
           InnovateUS
         </a>
         <a href="https://www.theburnescenter.org" target="_blank" rel="noopener" class="banner__link">
           <img src="/images/arrow.svg" alt="" class="banner__icon" />
-          The Burnes Center
+          The Burnes Center for Social Change
         </a>
         <a href="https://rebootdemocracy.ai" target="_blank" rel="noopener" class="banner__link">
           <img src="/images/arrow.svg" alt="" class="banner__icon" />
@@ -136,9 +135,18 @@ const isOpen = ref(false);
 .banner__dropdown {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 0 1.5rem 16px;
+  gap: 10px;
+  padding: 12px 20px;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.15);
   animation: slideDown 0.3s ease;
+  cursor: pointer;
+}
+
+.banner__dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 @keyframes slideDown {
@@ -152,13 +160,18 @@ const isOpen = ref(false);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .banner__desktop {
     display: none;
   }
 
   .banner__mobile {
-    display: block;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .banner__toggle {
+    padding: 12px 20px;
   }
 }
 </style>

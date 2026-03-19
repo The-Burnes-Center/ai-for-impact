@@ -42,40 +42,8 @@ const mobileMenuOpen = ref(false);
 
       <!-- Mobile hamburger -->
       <button class="header__hamburger" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Toggle menu">
-        <svg
-          v-if="!mobileMenuOpen"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          style="fill: #ffffff"
-          aria-hidden="true"
-        >
-          <path
-            d="M3 6H21M3 12H21M3 18H21"
-            stroke="white"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        <svg
-          v-else
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M5 5L19 19M5 19L19 5"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img v-if="!mobileMenuOpen" src="/images/navlinks.svg" alt="" class="header__menu-icon" />
+        <img v-else src="/images/cross.svg" alt="" class="header__menu-icon" />
       </button>
     </div>
 
@@ -144,6 +112,11 @@ const mobileMenuOpen = ref(false);
   border: none;
   cursor: pointer;
   padding: 8px;
+}
+
+.header__menu-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .header__mobile-nav {
