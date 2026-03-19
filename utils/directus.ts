@@ -40,6 +40,16 @@ export function filterPublished(items: any[], junctionKey: string) {
     .filter((item: any) => item?.status === 'published') ?? [];
 }
 
+export async function fetchTeamMembers() {
+  return directus.request(
+    readItems('ai_for_impact_team', {
+      fields: ['id', 'name', 'title', 'description', 'image', 'link', 'team_type'],
+      filter: { status: { _eq: 'published' } },
+      sort: ['id'],
+    })
+  );
+}
+
 export async function fetchAllProjects(){
   return directus.request(
     readItems(

@@ -237,7 +237,7 @@ const aboutParagraphs = computed(() =>
 }
 
 .metrics__value {
-  font-family: "freight-macro-pro", var(--font-text);
+  font-family: var(--font-macro);
   font-weight: 500;
   font-size: 96px;
   line-height: 90px;

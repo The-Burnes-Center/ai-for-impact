@@ -26,7 +26,7 @@ const mobileMenuOpen = ref(false);
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Products
         </NuxtLink>
-        <NuxtLink to="https://burnes.northeastern.edu/our-team/" class="header__link">
+        <NuxtLink to="/our-team" class="header__link">
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Our Team
         </NuxtLink>
@@ -54,7 +54,7 @@ const mobileMenuOpen = ref(false);
         <img src="/images/arrow-right.svg" alt="" class="header__icon" />
         Products
       </NuxtLink>
-      <NuxtLink to="https://burnes.northeastern.edu/our-team/" class="header__mobile-link" @click="mobileMenuOpen = false">
+      <NuxtLink to="/our-team" class="header__mobile-link" @click="mobileMenuOpen = false">
         <img src="/images/arrow-right.svg" alt="" class="header__icon" />
         Our Team
       </NuxtLink>
