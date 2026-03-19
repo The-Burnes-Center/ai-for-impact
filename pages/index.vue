@@ -27,7 +27,7 @@ const aboutParagraphs = computed(() =>
         />
 
         <div class="hero__actions">
-          <UiPrimaryButton to="#">Explore all projects</UiPrimaryButton>
+          <UiPrimaryButton to="/product">Explore all projects</UiPrimaryButton>
           <UiPrimaryButton
             v-if="page.latest_report"
             :href="assetUrl(page.latest_report)"
@@ -85,7 +85,7 @@ const aboutParagraphs = computed(() =>
       <div class="highlights-section__content">
         <UiHighlightsCarousel :highlights="highlights" />
         <div class="highlights-section__action">
-          <UiPrimaryButton to="#" variant="primary" icon="/images/arrow-right.svg" min-width="298px">Explore all projects</UiPrimaryButton>
+          <UiPrimaryButton to="/product" variant="primary" icon="/images/arrow-right.svg" min-width="298px">Explore all projects</UiPrimaryButton>
         </div>
       </div>
     </section>

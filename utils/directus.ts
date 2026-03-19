@@ -1,4 +1,4 @@
-import { createDirectus, rest, readItem, aggregate } from '@directus/sdk';
+import { createDirectus, rest, readItem, aggregate, readItems } from '@directus/sdk';
 
 export const API_URL = 'https://directus.theburnescenter.org';
 
@@ -38,4 +38,24 @@ export function filterPublished(items: any[], junctionKey: string) {
   return items
     ?.map((item: any) => item[junctionKey])
     .filter((item: any) => item?.status === 'published') ?? [];
+}
+
+export async function fetchAllProjects(){
+  return directus.request(
+    readItems(
+      'ai_for_impact_projects', {
+        fields: [
+          'id',
+          'project_image',
+          'project_title',
+          'project_description',
+          'subtitle',
+          'authors',
+          'repo_link',
+        ],
+        filter:{ status : {
+          _eq: 'published'
+        }}
+      })
+  )
 }
