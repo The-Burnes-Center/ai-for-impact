@@ -281,7 +281,7 @@ const aboutParagraphs = computed(() =>
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding: 40px 1.5rem;
+    padding: 70px 10px;
   }
 
   .about__content {

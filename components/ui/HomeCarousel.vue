@@ -64,7 +64,7 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 <style scoped>
 .carousel {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
   width: 100%;
 }
@@ -76,6 +76,7 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
   padding: 10px;
   flex-shrink: 0;
   transition: filter 0.3s ease;
+  margin-top: 150px;
 }
 
 .carousel__arrow:hover {
@@ -95,9 +96,9 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 
 .carousel__slide {
   display: none;
-  grid-template-columns: 9fr 11fr;
+  grid-template-columns: 532px 1fr;
   gap: 40px;
-  height: 400px;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -112,17 +113,17 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 }
 
 .carousel__image-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
+  height: 336px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .carousel__image {
   width: 100%;
-  height: 310px;
-  border-radius: 6px;
-  object-fit: contain;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: fill;
 }
 
 .carousel__text {
@@ -182,7 +183,7 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
   display: flex;
   justify-content: center;
   gap: 10px;
-  padding: 20px 0;
+  padding: 50px 0px 20px 0px;
 }
 
 .carousel__dot {
@@ -212,6 +213,7 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 
   .carousel__arrow {
     padding: 5px;
+    margin-top: 200px;
   }
 
   .carousel__arrow-icon {
@@ -223,19 +225,21 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
     grid-template-columns: 1fr;
     gap: 20px 10px;
     height: auto;
-    padding: 20px;
+    padding: 10px 15px;
   }
 
   .carousel__image-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: auto;
+    box-shadow: none;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   .carousel__image {
     height: auto;
     width: 100%;
-    max-height: none;
+    object-fit: cover;
+    border-radius: 10px;
   }
 
 
