@@ -15,6 +15,8 @@ const { data: projects } = await useAsyncData('all-projects', fetchAllProjects);
       />
     </div>
   </section>
+
+  <UiHighlightsSection :show-button="false" />
 </template>
 
 <style scoped>
