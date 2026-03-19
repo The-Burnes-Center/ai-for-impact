@@ -163,7 +163,7 @@ const faculty = computed(() =>
 
 .director__image {
   width: auto;
-  height: 292px;
+  height: 482px;
   object-fit: cover;
   border-radius: 10px;
 }
