@@ -2,19 +2,41 @@
 import { directus, assetUrl } from '~/utils/directus';
 import { readItem } from '@directus/sdk';
 
+const props = withDefaults(defineProps<{
+  bgColor?: string;
+  textColor?: string;
+  hoverColor?: string;
+  iconFilter?: string;
+  logoField?: string;
+}>(), {
+  bgColor: 'var(--color-dark)',
+  textColor: 'var(--color-cream)',
+  hoverColor: 'var(--color-accent)',
+  iconFilter: 'brightness(0) invert(1)',
+  logoField: 'logo',
+});
+
+const headerStyle = computed(() => ({
+  '--header-bg': props.bgColor,
+  '--header-text': props.textColor,
+  '--header-hover': props.hoverColor,
+  '--header-icon-filter': props.iconFilter,
+}));
+
 const { data: site } = await useAsyncData('header-logo', () =>
-  directus.request(readItem('ai_for_impact', 1, { fields: ['logo'] }))
+  directus.request(readItem('ai_for_impact', 1, { fields: ['logo', 'logo_lighter'] }))
 );
 
-const logoUrl = computed(() =>
-  site.value?.logo ? assetUrl(site.value.logo) : ''
-);
+const logoUrl = computed(() => {
+  const id = site.value?.[props.logoField];
+  return id ? assetUrl(id) : '';
+});
 
 const mobileMenuOpen = ref(false);
 </script>
 
 <template>
-  <header class="header" :class="{ 'header--open': mobileMenuOpen }">
+  <header class="header" :class="{ 'header--open': mobileMenuOpen }" :style="headerStyle">
     <div class="header__inner">
       <NuxtLink v-if="!mobileMenuOpen" to="/" class="header__logo">
         <img v-if="logoUrl" :src="logoUrl" alt="AI for Impact" class="header__logo-img" />
@@ -74,12 +96,8 @@ const mobileMenuOpen = ref(false);
 <style scoped>
 .header {
   width: 100%;
-  background-color: var(--color-dark);
+  background-color: var(--header-bg);
   padding: 20px 80px;
-}
-
-.header--open {
-  background-color: var(--color-dark);
 }
 
 .header__inner {
@@ -130,7 +148,7 @@ const mobileMenuOpen = ref(false);
   font-size: 22px;
   line-height: 28px;
   letter-spacing: 0;
-  color: var(--color-cream);
+  color: var(--header-text);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -146,12 +164,12 @@ const mobileMenuOpen = ref(false);
   left: 0;
   width: 0;
   height: 1.5px;
-  background-color: var(--color-accent);
+  background-color: var(--header-hover);
   transition: width 0.3s ease;
 }
 
 .header__link:hover {
-  color: var(--color-accent);
+  color: var(--header-hover);
 }
 
 .header__link:hover .header__icon {
@@ -167,6 +185,7 @@ const mobileMenuOpen = ref(false);
   height: 16px;
   transition: filter 0.3s ease;
   flex-shrink: 0;
+  filter: var(--header-icon-filter);
 }
 
 .header__icon--external {
@@ -174,14 +193,12 @@ const mobileMenuOpen = ref(false);
   height: 14px;
 }
 
-
-
 .header__mobile-link {
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 22px;
   line-height: 28px;
-  color: var(--color-cream);
+  color: var(--header-text);
   text-decoration: none;
   display: flex;
   align-items: center;

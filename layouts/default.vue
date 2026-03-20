@@ -9,6 +9,3 @@
     <HeroBanner position="bottom" />
   </div>
 </template>
-
-<script setup>
-</script>

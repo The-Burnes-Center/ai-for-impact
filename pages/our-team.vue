@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { fetchAiForImpact, fetchTeamMembers, assetUrl } from '~/utils/directus';
 
+definePageMeta({ layout: 'light' });
+
 const { data: page } = await useAsyncData('our-team', fetchAiForImpact);
 const { data: team } = await useAsyncData('team-members', fetchTeamMembers);
 

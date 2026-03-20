@@ -41,7 +41,7 @@ const prev = () => {
     <div class="highlights__stage">
       <div class="highlights__slide">
         <div v-for="highlight in visibleHighlights" :key="highlight.id" class="highlights__item">
-          <div class="highlights__desc" v-html="highlight.description" />
+          <UiRichMetric :content="highlight.description" />
           <div class="highlights__org" v-html="highlight.organization" />
         </div>
       </div>
@@ -106,29 +106,6 @@ const prev = () => {
   gap: 40px;
 }
 
-.highlights__desc {
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 42px;
-  line-height: 46px;
-  letter-spacing: 0;
-  color: var(--color-dark);
-}
-
-.highlights__desc :deep(p) {
-  margin: 0;
-}
-
-.highlights__desc :deep(em) {
-  font-family: var(--font-text);
-  font-weight: 600;
-  font-style: italic;
-  font-size: 49px;
-  line-height: 46px;
-  letter-spacing: 0;
-  color: var(--color-primary);
-}
-
 .highlights__org {
   font-family: var(--font-sans);
   font-weight: 400;
@@ -161,16 +138,6 @@ const prev = () => {
   .highlights__slide {
     flex-direction: column;
     gap: 30px;
-  }
-
-  .highlights__desc {
-    font-size: 24px;
-    line-height: 30px;
-  }
-
-  .highlights__desc :deep(em) {
-    font-size: 28px;
-    line-height: 30px;
   }
 
   .highlights__org {

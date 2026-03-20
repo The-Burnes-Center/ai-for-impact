@@ -7,6 +7,10 @@ export interface Project {
   subtitle: string;
   authors: string;
   repo_link: string;
+  long_description?: string;
+  metric_quote?: string;
+  slide_deck?: string | null;
+  additional_project_images?: { directus_files_id: string }[];
 }
 
 export interface Highlight {
