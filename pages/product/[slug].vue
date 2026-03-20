@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { fetchProject, assetUrl } from '~/utils/directus';
 
+definePageMeta({ layout: 'light' });
+
 const route = useRoute();
 const slug = route.params.slug as string;
 
