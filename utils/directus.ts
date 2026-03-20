@@ -50,6 +50,27 @@ export async function fetchTeamMembers() {
   );
 }
 
+export async function fetchProject(id: number | string) {
+  return directus.request(
+    readItem('ai_for_impact_projects', id, {
+      fields: [
+        'id',
+        'project_image',
+        'project_title',
+        'project_description',
+        'subtitle',
+        'authors',
+        'repo_link',
+        'long_description',
+        'metric_quote',
+        'slide_deck',
+        'additional_project_images.directus_files_id',
+      ],
+      filter: { status: { _eq: 'published' } },
+    })
+  );
+}
+
 export async function fetchAllProjects(){
   return directus.request(
     readItems(
