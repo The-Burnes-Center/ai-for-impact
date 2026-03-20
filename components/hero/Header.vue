@@ -100,10 +100,6 @@ const mobileMenuOpen = ref(false);
   padding: 20px 80px;
 }
 
-.header--open {
-  background-color: var(--header-bg);
-}
-
 .header__inner {
   display: flex;
   align-items: center;
@@ -196,8 +192,6 @@ const mobileMenuOpen = ref(false);
   width: 14px;
   height: 14px;
 }
-
-
 
 .header__mobile-link {
   font-family: var(--font-sans);

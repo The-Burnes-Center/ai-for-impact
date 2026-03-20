@@ -188,7 +188,7 @@ if (!project.value) {
   max-width: 1440px;
   min-height: 500px;
   margin: 0 auto;
-  padding: 80px 80px;
+  padding: 80px;
   display: flex;
   justify-content: space-between;
   gap: 80px;
