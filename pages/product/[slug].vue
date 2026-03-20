@@ -62,6 +62,26 @@ if (!project.value) {
         class="product-detail__metric"
       />
     </div>
+
+    <div v-if="project" class="product-actions">
+      <UiPrimaryButton
+        v-if="project.slide_deck"
+        :href="assetUrl(project.slide_deck)"
+        variant="primary"
+        icon="/images/arrow-down.svg"
+      >
+        Download the slide deck
+      </UiPrimaryButton>
+
+      <UiPrimaryButton
+        v-if="project.repo_link"
+        :href="project.repo_link"
+        variant="primary"
+        icon="/images/arrow.svg"
+      >
+        Go to repository
+      </UiPrimaryButton>
+    </div>
   </div>
 </template>
 
@@ -195,7 +215,23 @@ if (!project.value) {
   flex: 1;
 }
 
+.product-actions {
+  max-width: 1440px;
+  min-height: 270px;
+  margin: 0 auto;
+  padding: 10px 80px 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  background: linear-gradient(180deg, #F8F6F1 60.58%, #CFDCF5 73.08%, #ABC5F9 82.69%, #6A9CFF 92.79%, #376BD1 100%);
+}
+
 @media (max-width: 1024px) {
+  .product-actions {
+    padding: 40px 24px 100px;
+  }
+
   .product-detail {
     flex-direction: column;
     padding: 60px 24px;
