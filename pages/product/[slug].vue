@@ -229,6 +229,7 @@ if (!project.value) {
 
 @media (max-width: 1024px) {
   .product-actions {
+    flex-direction: column;
     padding: 40px 24px 100px;
   }
 
