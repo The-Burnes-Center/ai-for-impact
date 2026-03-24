@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeroBanner />
-    <HeroHeader />
+    <HeroHeader :sticky-shadow="false" />
     <main>
       <slot />
     </main>
