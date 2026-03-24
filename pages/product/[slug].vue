@@ -255,8 +255,7 @@ const additionalProjectImages = computed(() =>
 .product-gallery__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 400px);
-  justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
   padding-top: 90px;
 }
 
