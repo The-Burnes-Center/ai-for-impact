@@ -210,9 +210,9 @@ const additionalProjectImages = computed(() =>
 
 .product-detail {
   max-width: 1440px;
-  min-height: 500px;
+  min-height: auto;
   margin: 0 auto;
-  padding: 80px 80px;
+  padding: 80px 80px 30px 80px;
   display: flex;
   justify-content: space-between;
   gap: 40px;
@@ -257,6 +257,7 @@ const additionalProjectImages = computed(() =>
   grid-template-columns: repeat(auto-fit, 400px);
   justify-content: space-between;
   gap: 20px;
+  padding-top: 90px;
 }
 
 .product-gallery__item {
