@@ -22,6 +22,16 @@ defineProps<{
   margin: 0;
 }
 
+.rich-metric :deep(p) {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 46px;
+  letter-spacing: 0;
+  color: var(--color-dark);
+  margin: 0;
+}
+
 .rich-metric :deep(em) {
   font-family: var(--font-text);
   font-weight: 600;

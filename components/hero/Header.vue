@@ -8,12 +8,14 @@ const props = withDefaults(defineProps<{
   hoverColor?: string;
   iconFilter?: string;
   logoField?: string;
+  stickyShadow?: boolean;
 }>(), {
   bgColor: 'var(--color-dark)',
   textColor: 'var(--color-cream)',
   hoverColor: 'var(--color-accent)',
   iconFilter: 'brightness(0) invert(1)',
   logoField: 'logo',
+  stickyShadow: true,
 });
 
 const headerStyle = computed(() => ({
@@ -33,10 +35,31 @@ const logoUrl = computed(() => {
 });
 
 const mobileMenuOpen = ref(false);
+const isSticky = ref(false);
+
+function updateStickyState() {
+  isSticky.value = window.scrollY > 8;
+}
+
+onMounted(() => {
+  updateStickyState();
+  window.addEventListener('scroll', updateStickyState, { passive: true });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updateStickyState);
+});
 </script>
 
 <template>
-  <header class="header" :class="{ 'header--open': mobileMenuOpen }" :style="headerStyle">
+  <header
+    class="header"
+    :class="{
+      'header--open': mobileMenuOpen,
+      'header--stuck': isSticky && !mobileMenuOpen && props.stickyShadow,
+    }"
+    :style="headerStyle"
+  >
     <div class="header__inner">
       <NuxtLink v-if="!mobileMenuOpen" to="/" class="header__logo">
         <img v-if="logoUrl" :src="logoUrl" alt="AI for Impact" class="header__logo-img" />
@@ -95,10 +118,34 @@ const mobileMenuOpen = ref(false);
 
 <style scoped>
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
   width: 100%;
   background-color: var(--header-bg);
   padding: 20px 80px;
+  transition: box-shadow 0.25s ease, background-image 0.25s ease;
 }
+
+.header--stuck {
+  position: sticky;
+}
+
+.header--stuck::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 6px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(19, 42, 80, 0.10) 0%,
+    rgba(19, 42, 80, 0) 100%
+  );
+}
+
 
 .header__inner {
   display: flex;

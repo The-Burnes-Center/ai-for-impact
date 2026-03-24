@@ -13,6 +13,12 @@ const { data: project } = await useAsyncData(`project-${slug}`, () =>
 if (!project.value) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' });
 }
+
+const additionalProjectImages = computed(() =>
+  project.value?.additional_project_images
+    ?.map((image) => image.directus_files_id)
+    .filter((image): image is string => Boolean(image)) ?? []
+);
 </script>
 
 <template>
@@ -65,6 +71,25 @@ if (!project.value) {
       />
     </div>
 
+    <section
+      v-if="additionalProjectImages.length"
+      class="product-gallery"
+    >
+      <div class="product-gallery__grid">
+        <div
+          v-for="(image, index) in additionalProjectImages"
+          :key="`${image}-${index}`"
+          class="product-gallery__item"
+        >
+          <img
+            :src="assetUrl(image)"
+            :alt="`${project?.project_title} additional image ${index + 1}`"
+            class="product-gallery__image"
+          />
+        </div>
+      </div>
+    </section>
+
     <div v-if="project" class="product-actions">
       <UiPrimaryButton
         v-if="project.slide_deck"
@@ -110,13 +135,12 @@ if (!project.value) {
   height: 438px;
   border-radius: 10px;
   overflow: hidden;
-  border: 2px solid var(--color-primary);
 }
 
 .product-hero__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   display: block;
 }
 
@@ -162,7 +186,7 @@ if (!project.value) {
   line-height: 30px;
   letter-spacing: 0%;
   color: var(--color-dark);
-  padding-top: 50px;
+  padding-top: 20px;
   max-width: 500px;
 }
 
@@ -181,17 +205,17 @@ if (!project.value) {
   line-height: 22px;
   letter-spacing: 0%;
   color: var(--color-dark);
-  margin: 50px 0 8px 0px;
+  margin: 20px 0 8px 0px;
 }
 
 .product-detail {
   max-width: 1440px;
   min-height: 500px;
   margin: 0 auto;
-  padding: 80px;
+  padding: 80px 80px;
   display: flex;
   justify-content: space-between;
-  gap: 80px;
+  gap: 40px;
 }
 
 .product-detail__description {
@@ -203,6 +227,7 @@ if (!project.value) {
   letter-spacing: 0%;
   color: var(--color-dark);
   text-wrap: balance;
+  padding-right: 40px;
 }
 
 .product-detail__description :deep(p) {
@@ -217,10 +242,39 @@ if (!project.value) {
   flex: 1;
 }
 
-.product-actions {
+.product-detail__metric :deep(p) {
+  margin-bottom: 20px;
+}
+
+.product-gallery {
   max-width: 1440px;
-  min-height: 270px;
   margin: 0 auto;
+  padding: 0 80px 80px;
+}
+
+.product-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.product-gallery__item {
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.product-gallery__image {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.product-actions {
+
+  min-height: 270px;
   padding: 10px 80px 140px;
   display: flex;
   align-items: center;
@@ -239,6 +293,21 @@ if (!project.value) {
     flex-direction: column;
     padding: 60px 24px;
     min-height: auto;
+    gap: 40px;
+  }
+
+  .product-gallery {
+    padding: 0 24px 60px;
+  }
+
+  .product-gallery__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail__description {
+    padding-right: 0;
+    border-right: none;
+    padding-bottom: 40px;
   }
 
   .product-hero {
