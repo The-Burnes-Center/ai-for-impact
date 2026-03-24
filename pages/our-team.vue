@@ -1,10 +1,26 @@
 <script setup lang="ts">
-import { fetchAiForImpact, fetchTeamMembers, assetUrl } from '~/utils/directus';
+import { readItems } from '@directus/sdk';
+import { fetchAiForImpact, fetchTeamMembers, assetUrl, directus } from '~/utils/directus';
 
 definePageMeta({ layout: 'light' });
 
 const { data: page } = await useAsyncData('our-team', fetchAiForImpact);
 const { data: team } = await useAsyncData('team-members', fetchTeamMembers);
+const { data: newsData } = await useAsyncData(
+  'bio-news',
+  async () => {
+    const res = await directus.request(
+      readItems('team', {
+        filter: { id: { _eq: 197 } },
+        fields: ['bio_short_reboot'],
+        limit: 1,
+      })
+    );
+
+    return (res as any[])?.[0]?.bio_short_reboot || null;
+  },
+  { server: true }
+);
 
 const director = computed(() => team.value?.find((m: any) => m.id === 1));
 const coops = computed(() =>
@@ -13,6 +29,7 @@ const coops = computed(() =>
 const faculty = computed(() =>
   team.value?.filter((m: any) => m.team_type?.includes('AI for Impact Team')) ?? []
 );
+const directorBio = computed(() => newsData.value || director.value?.description || '');
 </script>
 
 <template>
@@ -40,7 +57,16 @@ const faculty = computed(() =>
         </div>
         <div class="director__info">
           <h2 class="director__heading">About <em>our</em> director</h2>
-          <div class="director__bio" v-html="director.description" />
+          <div class="director__bio" v-html="directorBio" />
+          <div class="director__button">
+            <UiPrimaryButton
+              href="https://rebootdemocracy.ai/bio#about-beth"
+              variant="primary"
+              icon="/images/arrow.svg"
+            >
+              Complete Bio
+            </UiPrimaryButton>
+          </div>
           <div class="director__socials">
             <a href="https://www.linkedin.com/in/bethnoveck" target="_blank" rel="noopener" class="director__social-link">
               <img src="/images/linkedin.svg" alt="LinkedIn" class="director__social-icon" />
@@ -223,6 +249,26 @@ const faculty = computed(() =>
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
+}
+
+.director__button {
+  width: fit-content;
+}
+
+.director__button :deep(.btn) {
+  min-width: auto;
+  height: auto;
+  padding: 14px 22px;
+}
+
+.director__button :deep(.btn__text) {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.director__button :deep(.btn__icon) {
+  width: 22px;
+  height: 22px;
 }
 
 .director__social-link {

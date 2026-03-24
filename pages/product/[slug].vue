@@ -254,21 +254,24 @@ const additionalProjectImages = computed(() =>
 
 .product-gallery__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, 400px);
+  justify-content: space-between;
   gap: 20px;
 }
 
 .product-gallery__item {
-  border-radius: 16px;
+  width: 400px;
+  height: 300px;
+  border-radius: 10px;
   overflow: hidden;
-  background-color: #fff;
+  opacity: 1;
 }
 
 .product-gallery__image {
   width: 100%;
   height: 100%;
   min-height: 280px;
-  object-fit: cover;
+  object-fit: fit;
   display: block;
 }
 
@@ -302,6 +305,12 @@ const additionalProjectImages = computed(() =>
 
   .product-gallery__grid {
     grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .product-gallery__item {
+    width: 100%;
+    height: 300px;
   }
 
   .product-detail__description {

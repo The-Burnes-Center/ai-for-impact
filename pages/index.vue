@@ -63,7 +63,7 @@ const aboutParagraphs = computed(() =>
         </div>
         <div class="team__text">
           <div class="team__description" v-html="page.about_team" />
-          <UiPrimaryButton href="https://burnes.northeastern.edu/our-team/" variant="cream" icon="/images/arrow-right.svg" min-width="249px">Meet the team</UiPrimaryButton>
+          <UiPrimaryButton href="/our-team" variant="cream" icon="/images/arrow-right.svg" min-width="249px">Meet the team</UiPrimaryButton>
         </div>
       </div>
 
