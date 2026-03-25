@@ -75,6 +75,14 @@ onBeforeUnmount(() => {
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Meet the Fellows 
         </NuxtLink>
+        <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__link">
+          <img src="/images/arrow-right.svg" alt="" class="header__icon" />
+          Information for Partners
+        </a>
+        <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__link">
+          <img src="/images/arrow-down.svg" alt="" class="header__icon" />
+          Course
+        </a>
         <a href="https://burnes.northeastern.edu/upcoming-events/" target="_blank" rel="noopener" class="header__link">
           <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
           Events
