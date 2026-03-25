@@ -139,7 +139,7 @@ onBeforeUnmount(() => {
   z-index: 999;
   width: 100%;
   background-color: var(--header-bg);
-  padding: 20px 80px;
+  padding: 20px 40px;
   transition: box-shadow 0.25s ease, background-image 0.25s ease;
 }
 
