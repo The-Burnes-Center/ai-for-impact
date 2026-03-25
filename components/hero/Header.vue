@@ -184,7 +184,7 @@ onBeforeUnmount(() => {
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 25px;
 }
 
 .header__hamburger {
@@ -215,7 +215,7 @@ onBeforeUnmount(() => {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
   position: relative;
   transition: color 0.3s ease;
 }
