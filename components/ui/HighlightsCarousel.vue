@@ -134,7 +134,7 @@ const prev = () => {
 
 @media (max-width: 768px) {
   .highlights {
-    gap: 20px;
+    gap: 10px;
   }
 
   .highlights__arrow {

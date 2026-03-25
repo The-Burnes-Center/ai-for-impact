@@ -176,7 +176,7 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 }
 
 .carousel__desc :deep(p) {
-  margin: 10px 20px 0px 0px;
+  margin: 10px 0px;
 }
 
 .carousel__dots {
@@ -225,7 +225,7 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
     grid-template-columns: 1fr;
     gap: 20px 10px;
     height: auto;
-    padding: 10px 15px;
+    padding: 10px 2px;
   }
 
   .carousel__image-wrapper {
