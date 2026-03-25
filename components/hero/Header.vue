@@ -166,7 +166,7 @@ onBeforeUnmount(() => {
 .header__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 3.5rem;
   height: 70px;
 }
 
@@ -184,7 +184,7 @@ onBeforeUnmount(() => {
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 50px;
 }
 
 .header__hamburger {
