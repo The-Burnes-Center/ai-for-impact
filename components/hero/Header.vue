@@ -215,7 +215,7 @@ onBeforeUnmount(() => {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
   position: relative;
   transition: color 0.3s ease;
 }
