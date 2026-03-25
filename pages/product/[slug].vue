@@ -131,15 +131,14 @@ const additionalProjectImages = computed(() =>
 
 .product-hero__image-wrap {
   flex-shrink: 0;
-  width: 620px;
-  height: 438px;
+  width: 710px;
   border-radius: 10px;
   overflow: hidden;
 }
 
 .product-hero__image {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: fill;
   display: block;
 }
@@ -261,8 +260,6 @@ const additionalProjectImages = computed(() =>
 
 .product-gallery__item {
   width: 400px;
-  height: 300px;
-  border-radius: 10px;
   overflow: hidden;
   opacity: 1;
 }
@@ -270,8 +267,8 @@ const additionalProjectImages = computed(() =>
 .product-gallery__image {
   width: 100%;
   height: 100%;
-  min-height: 280px;
-  object-fit: fit;
+  border-radius: 10px;
+  object-fit: fill;
   display: block;
 }
 

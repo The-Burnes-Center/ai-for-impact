@@ -36,9 +36,14 @@ defineProps<{
   font-family: var(--font-text);
   font-weight: 600;
   font-style: italic;
-  font-size: 49px;
-  line-height: 46px;
   letter-spacing: 0;
   color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .rich-metric :deep(p) {
+    font-size: 25px;
+    line-height: 30px;
+  }
 }
 </style>

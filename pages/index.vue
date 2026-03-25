@@ -32,7 +32,7 @@ const aboutParagraphs = computed(() =>
             :href="assetUrl(page.latest_report)"
             icon="/images/arrow-down.svg"
           >
-            Download our latest report
+            Download What We've Built
           </UiPrimaryButton>
         </div>
       </div>
@@ -140,8 +140,6 @@ const aboutParagraphs = computed(() =>
   font-family: var(--font-text);
   font-weight: 600;
   font-style: italic;
-  font-size: 49px;
-  line-height: 46px;
   letter-spacing: 0;
   color: var(--color-primary);
 }
@@ -264,8 +262,6 @@ const aboutParagraphs = computed(() =>
   font-family: var(--font-text);
   font-weight: 600;
   font-style: italic;
-  font-size: 49px;
-  line-height: 46px;
   letter-spacing: 0;
 }
 

@@ -106,6 +106,12 @@ const prev = () => {
   gap: 40px;
 }
 
+@media (max-width: 768px) {
+  .highlights__item {
+    gap: 20px;
+  }
+}
+
 .highlights__org {
   font-family: var(--font-sans);
   font-weight: 400;

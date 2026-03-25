@@ -121,9 +121,9 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 
 .carousel__image {
   width: 100%;
-  height: 100%;
   border-radius: 10px;
   object-fit: fill;
+  min-height: 300px;
 }
 
 .carousel__text {

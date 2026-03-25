@@ -52,7 +52,7 @@ const props = defineProps<{
 .card__image {
   width: 100%;
   height: 250px;
-  object-fit: fill;
+  object-fit: cover;
   border-radius: 10px;
 }
 

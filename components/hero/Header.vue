@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
         </NuxtLink>
         <NuxtLink to="/our-team" class="header__link">
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
-          Our Team
+          Meet the Fellows 
         </NuxtLink>
         <a href="https://burnes.northeastern.edu/upcoming-events/" target="_blank" rel="noopener" class="header__link">
           <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
@@ -96,19 +96,19 @@ onBeforeUnmount(() => {
     <Transition name="menu-slide">
     <nav v-if="mobileMenuOpen" class="header__mobile-nav">
       <NuxtLink to="/product" class="header__mobile-link" @click="mobileMenuOpen = false">
-        <img src="/images/arrow-right.svg" alt="" class="header__icon" />
+        <img src="/images/arrow-blue.svg" alt="" class="header__icon" />
         Products
       </NuxtLink>
       <NuxtLink to="/our-team" class="header__mobile-link" @click="mobileMenuOpen = false">
-        <img src="/images/arrow-right.svg" alt="" class="header__icon" />
-        Our Team
+        <img src="/images/arrow-blue.svg" alt="" class="header__icon" />
+        Meet the Fellows
       </NuxtLink>
       <a href="https://burnes.northeastern.edu/upcoming-events/" target="_blank" rel="noopener" class="header__mobile-link">
-        <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
+        <img src="/images/arrow-up-blue.svg" alt="" class="header__icon header__icon--external" />
         Events
       </a>
       <a href="https://burnes.northeastern.edu/news/" target="_blank" rel="noopener" class="header__mobile-link">
-        <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
+        <img src="/images/arrow-up-blue.svg" alt="" class="header__icon header__icon--external" />
         News
       </a>
     </nav>
@@ -248,7 +248,7 @@ onBeforeUnmount(() => {
   color: var(--header-text);
   text-decoration: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   padding: 16px 0;
   animation: slideFromRight 0.4s ease both;
@@ -297,7 +297,6 @@ onBeforeUnmount(() => {
   .header__mobile-nav {
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 20px 20px;
     min-height: calc(100vh - 120px);
     gap: 50px;
