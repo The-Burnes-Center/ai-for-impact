@@ -25,11 +25,13 @@ const additionalProjectImages = computed(() =>
   <div class="product-page">
     <div v-if="project" class="product-hero">
       <div class="product-hero__image-wrap">
-        <img
+        <UiDirectusImg
           v-if="project.project_image"
-          :src="assetUrl(project.project_image)"
+          :id="project.project_image"
           :alt="project.project_title"
           class="product-hero__image"
+          preset="hero"
+          priority
         />
       </div>
 
@@ -81,10 +83,11 @@ const additionalProjectImages = computed(() =>
           :key="`${image}-${index}`"
           class="product-gallery__item"
         >
-          <img
-            :src="assetUrl(image)"
-            :alt="`${project?.project_title} additional image ${index + 1}`"
+          <UiDirectusImg
+            :id="image"
+            :alt="`${project?.project_title} additional image ${Number(index) + 1}`"
             class="product-gallery__image"
+            sizes="(max-width: 768px) 100vw, 400px"
           />
         </div>
       </div>
@@ -130,16 +133,23 @@ const additionalProjectImages = computed(() =>
 }
 
 .product-hero__image-wrap {
+  position: relative;
   flex-shrink: 0;
   width: 710px;
+  max-width: 100%;
+  aspect-ratio: 620 / 438;
   border-radius: 10px;
   overflow: hidden;
+  background-color: var(--color-cream);
 }
 
-.product-hero__image {
+.product-hero__image-wrap :deep(.product-hero__image) {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  object-fit: fill;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
   display: block;
 }
 
@@ -259,16 +269,23 @@ const additionalProjectImages = computed(() =>
 }
 
 .product-gallery__item {
+  position: relative;
   width: 400px;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
-  opacity: 1;
+  border-radius: 10px;
+  background-color: var(--color-cream);
 }
 
-.product-gallery__image {
+.product-gallery__item :deep(.product-gallery__image) {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  object-fit: fill;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -324,7 +341,6 @@ const additionalProjectImages = computed(() =>
 
   .product-hero__image-wrap {
     width: 100%;
-    height: auto;
     aspect-ratio: 620 / 438;
   }
 }

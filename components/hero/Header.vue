@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { directus, assetUrl } from '~/utils/directus';
+import { directus } from '~/utils/directus';
 import { readItem } from '@directus/sdk';
 
 const props = withDefaults(defineProps<{
@@ -29,10 +29,7 @@ const { data: site } = await useAsyncData('header-logo', () =>
   directus.request(readItem('ai_for_impact', 1, { fields: ['logo', 'logo_lighter'] }))
 );
 
-const logoUrl = computed(() => {
-  const id = site.value?.[props.logoField];
-  return id ? assetUrl(id) : '';
-});
+const logoId = computed(() => site.value?.[props.logoField] ?? '');
 
 const mobileMenuOpen = ref(false);
 const isSticky = ref(false);
@@ -62,7 +59,13 @@ onBeforeUnmount(() => {
   >
     <div class="header__inner">
       <NuxtLink v-if="!mobileMenuOpen" to="/" class="header__logo">
-        <img v-if="logoUrl" :src="logoUrl" alt="AI for Impact" class="header__logo-img" />
+        <UiDirectusImg
+          v-if="logoId"
+          :id="logoId"
+          alt="AI for Impact"
+          class="header__logo-img"
+          priority
+        />
       </NuxtLink>
 
       <!-- Desktop nav -->
@@ -176,7 +179,7 @@ onBeforeUnmount(() => {
   align-items: center;
 }
 
-.header__logo-img {
+.header__logo :deep(.header__logo-img) {
   height: 50px;
   width: auto;
 }

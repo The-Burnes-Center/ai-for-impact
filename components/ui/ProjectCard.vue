@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Project } from '~/models';
-import { assetUrl } from '~/utils/directus';
 
 const props = defineProps<{
   project: Project;
@@ -27,12 +26,13 @@ function onCardKeydown(e: KeyboardEvent) {
     @click="goToProduct"
     @keydown="onCardKeydown"
   >
-    <img
-      v-if="project.project_image"
-      :src="assetUrl(project.project_image)"
-      :alt="project.project_title"
-      class="card__image"
-    />
+    <div v-if="project.project_image" class="card__media">
+      <UiDirectusImg
+        :id="project.project_image"
+        :alt="project.project_title"
+        class="card__image"
+      />
+    </div>
 
     <h3 class="card__title">{{ project.project_title }}</h3>
 
@@ -68,19 +68,17 @@ function onCardKeydown(e: KeyboardEvent) {
   border-radius: 10px;
   border: 1.5px solid transparent;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   width: 380px;
   min-height: 533px;
-  padding: 20px;
   cursor: pointer;
   transition: border-color 0.3s ease;
 }
 
 .card:hover {
-
   border-color: var(--color-accent);
 }
 
@@ -94,11 +92,22 @@ function onCardKeydown(e: KeyboardEvent) {
   width: 100%;
 }
 
-.card__image {
+.card__media {
+  position: relative;
   width: 100%;
-  height: 250px;
-  object-fit: cover;
+  aspect-ratio: 4 / 3;
   border-radius: 10px;
+  background-color: var(--color-dark);
+  overflow: hidden;
+}
+
+.card__media :deep(.card__image) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .card__title {
@@ -213,10 +222,6 @@ a.card__link:hover {
 }
 
 @media (max-width: 768px) {
-  .card__image {
-    height: 200px;
-  }
-
   .card__actions {
     flex-direction: column;
     align-items: flex-start;

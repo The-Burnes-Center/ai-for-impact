@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { assetUrl } from '~/utils/directus';
 
 const props = defineProps<{
   member: {
@@ -45,14 +44,19 @@ const props = defineProps<{
 .team-card__image-wrapper {
   position: relative;
   width: 250px;
-  height: 292px;
+  aspect-ratio: 250 / 292;
   flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.team-card__image {
-  width: 250px;
-  height: 292px;
+.team-card__image-wrapper :deep(.team-card__image) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   border-radius: 10px;
 }
 
@@ -119,13 +123,12 @@ const props = defineProps<{
 
 @media (max-width: 768px) {
   .team-card {
-  
     padding-right: 0;
   }
 
-  .team-card__image {
-    width: 250px;
-    height: 292px;
+  .team-card__image-wrapper {
+    width: 100%;
+    max-width: 250px;
   }
 }
 </style>

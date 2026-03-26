@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl, API_URL } from '~/utils/directus';
+import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl } from '~/utils/directus';
 
 const { data: page } = await useAsyncData('ai-for-impact', fetchAiForImpact);
 const { data: projectCount } = await useAsyncData('project-count', fetchProjectCount);
@@ -19,11 +19,7 @@ const aboutParagraphs = computed(() =>
       <div class="hero__content">
 
         <!-- Project Carousel -->
-        <UiHomeCarousel
-          v-if="projects.length"
-          :projects="projects"
-          :directus-url="API_URL"
-        />
+        <UiHomeCarousel v-if="projects.length" :projects="projects" />
 
         <div class="hero__actions">
           <UiPrimaryButton to="/product">Explore all projects</UiPrimaryButton>
@@ -54,9 +50,9 @@ const aboutParagraphs = computed(() =>
 
       <div class="team">
         <div class="team__image-wrapper">
-          <img
+          <UiDirectusImg
             v-if="page.team_image"
-            :src="assetUrl(page.team_image)"
+            :id="page.team_image"
             alt="AI for Impact team"
             class="team__image"
           />
@@ -169,13 +165,20 @@ const aboutParagraphs = computed(() =>
 }
 
 .team__image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
+  border-radius: 0;
 }
 
-.team__image {
+.team__image-wrapper :deep(.team__image) {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .team__text {

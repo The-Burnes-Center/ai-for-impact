@@ -6,6 +6,26 @@ export const directus = createDirectus(API_URL).with(rest());
 
 export const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
 
+/** Directus file fields may be a UUID string or `{ id }` from the API */
+export function assetFileId(
+  value: string | { id?: string } | null | undefined
+): string {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'object' && value.id) return String(value.id);
+  return '';
+}
+
+export function imageUrl(
+  id: string | { id?: string } | null | undefined,
+  preset: 'hero' | 'card' = 'card'
+) {
+  const fileId = assetFileId(id);
+  if (!fileId) return '';
+  const width = preset === 'hero' ? 1600 : 800;
+  return `${API_URL}/assets/${fileId}?width=${width}&quality=80`;
+}
+
 export async function fetchAiForImpact() {
   return directus.request(
     readItem('ai_for_impact', 1, {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { readItems } from '@directus/sdk';
-import { fetchAiForImpact, fetchTeamMembers, assetUrl, directus } from '~/utils/directus';
+import { fetchAiForImpact, fetchTeamMembers, directus } from '~/utils/directus';
 
 definePageMeta({ layout: 'light' });
 
@@ -48,11 +48,12 @@ const directorBio = computed(() => newsData.value || director.value?.description
     <section v-if="director" class="director">
       <div class="director__content">
         <div class="director__image-wrapper">
-          <img
+          <UiDirectusImg
             v-if="director.image"
-            :src="assetUrl(director.image)"
+            :id="director.image"
             :alt="director.name"
             class="director__image"
+            priority
           />
         </div>
         <div class="director__info">
@@ -185,14 +186,21 @@ const directorBio = computed(() => newsData.value || director.value?.description
 }
 
 .director__image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 10px;
 }
 
-.director__image {
-  width: auto;
-  height: 482px;
+.director__image-wrapper :deep(.director__image) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   border-radius: 10px;
 }
 

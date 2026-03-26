@@ -4,9 +4,8 @@ import type { Project } from '~/models';
 
 // add props to accept
 
-const props = defineProps<{
-    projects: Project[],
-    directusUrl: string
+defineProps<{
+  projects: Project[];
 }>();
 
 const activeIndex = ref(0); // tracks the index of active project as ref(0) creates a reactive variable
@@ -16,8 +15,6 @@ const next = () =>{
 const prev = () =>{
     activeIndex.value = (activeIndex.value - 1 + props.projects.length) % props.projects.length;
 };
-
-const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 
 </script>
 
@@ -34,7 +31,12 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
         :class="{ 'carousel__slide--active': index === activeIndex }"
         >
         <div class="carousel__image-wrapper">
-            <img v-if="project.project_image" :src="assetUrl(project.project_image)" alt="Project Image" class="carousel__image" />
+            <UiDirectusImg
+              v-if="project.project_image"
+              :id="project.project_image"
+              alt="Project Image"
+              class="carousel__image"
+            />
         </div>
         <div class="carousel__text">
             <h2 class="carousel__title">{{ project.project_title }}</h2>
@@ -113,17 +115,22 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
 }
 
 .carousel__image-wrapper {
+  position: relative;
   width: 100%;
-  height: 336px;
+  aspect-ratio: 4 / 3;
   border-radius: 10px;
   overflow: hidden;
+  background-color: var(--color-dark);
 }
 
-.carousel__image {
+.carousel__image-wrapper :deep(.carousel__image) {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
   border-radius: 10px;
-  object-fit: fill;
-  min-height: 300px;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .carousel__text {
@@ -229,19 +236,9 @@ const assetUrl = (id: string) => `${props.directusUrl}/assets/${id}`;
   }
 
   .carousel__image-wrapper {
-    height: auto;
+    aspect-ratio: 4 / 3;
     box-shadow: none;
-    border-radius: 10px;
-    overflow: hidden;
   }
-
-  .carousel__image {
-    height: auto;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
 
   .carousel__desc {
     line-height: 28px;
