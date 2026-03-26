@@ -101,6 +101,7 @@ const filteredProjects = computed(() => {
 }
 
 .product-page__inner {
+  container-type: inline-size;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 40px clamp(20px, 4vw, 80px) 80px;
@@ -111,7 +112,7 @@ const filteredProjects = computed(() => {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 1rem 1.5rem;
+  justify-content: space-between;
   margin-bottom: 2.5rem;
 }
 
@@ -119,12 +120,23 @@ const filteredProjects = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex: 1 1 220px;
+  flex: 0 0 38%;
+  width: 38%;
+  max-width: 38%;
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .product-page__field--narrow {
-  flex: 0 1 220px;
+  flex: 0 0 57%;
+  width: 57%;
+  max-width: 57%;
+}
+
+.product-page__toolbar > .product-page__field:only-child {
+  flex: 1 1 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .product-page__label {
@@ -182,6 +194,19 @@ const filteredProjects = computed(() => {
 @media (max-width: 768px) {
   .product-page__inner {
     padding-bottom: 40px;
+  }
+
+  .product-page__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: min(5rem, 5cqi);
+  }
+
+  .product-page__field,
+  .product-page__field--narrow {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
   }
 
   .product-page__grid {

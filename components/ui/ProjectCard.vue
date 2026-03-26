@@ -68,7 +68,7 @@ function onCardKeydown(e: KeyboardEvent) {
   border-radius: 10px;
   border: 1.5px solid transparent;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 20px 20px 30px 20px;
   display: flex;
   flex-direction: column;
   gap: 15px;

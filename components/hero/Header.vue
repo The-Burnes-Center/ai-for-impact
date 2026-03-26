@@ -212,7 +212,7 @@ onBeforeUnmount(() => {
   container-name: header-inner;
   display: flex;
   align-items: center;
-  gap: min(5rem, 5cqi);
+  justify-content: space-around;
   width: 100%;
   max-width: 100%;
   height: clamp(60px, 9vh, 70px);
