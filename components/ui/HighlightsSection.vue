@@ -14,7 +14,9 @@ const props = withDefaults(defineProps<{
 const { data: page } = await useAsyncData('highlights-data', fetchAiForImpact);
 const highlights = computed(() => filterPublished(page.value?.highlights, 'ai_for_impact_highlights_id'));
 
-const { data: rebootBlogRaw } = await useAsyncData('reboot-blog-ai-for-impact', () => fetchRebootBlogAiForImpact());
+const { data: rebootBlogRaw } = await useAsyncData('reboot-blog-ai-for-impact', () =>
+  fetchRebootBlogAiForImpact(3)
+);
 
 const rebootBlogPosts = computed(() => (rebootBlogRaw.value ?? []) as RebootBlogPost[]);
 
@@ -24,7 +26,8 @@ function blogToProject(post: RebootBlogPost): Project {
     status: 'published',
     project_image: post.image,
     project_title: post.title,
-    project_description: post.one_line ?? '',
+    project_description: post.excerpt ?? '',
+    subtitle: post.one_line ? `<p>${post.one_line}</p>` : '',
     authors: '',
     repo_link: '',
   };
