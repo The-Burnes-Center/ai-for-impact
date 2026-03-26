@@ -6,6 +6,11 @@ export const directus = createDirectus(API_URL).with(rest());
 
 export const assetUrl = (id: string) => `${API_URL}/assets/${id}`;
 
+export function assetDownloadUrl(id: string) {
+  if (!id) return '';
+  return `${API_URL}/assets/${id}?download`;
+}
+
 /** Directus file fields may be a UUID string or `{ id }` from the API */
 export function assetFileId(
   value: string | { id?: string } | null | undefined

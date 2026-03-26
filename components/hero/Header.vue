@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { directus } from '~/utils/directus';
+import { directus, assetDownloadUrl, assetFileId } from '~/utils/directus';
 import { readItem } from '@directus/sdk';
 
 const props = withDefaults(defineProps<{
@@ -26,11 +26,14 @@ const headerStyle = computed(() => ({
 }));
 
 const { data: site } = await useAsyncData('header-logo', () =>
-  directus.request(readItem('ai_for_impact', 1, { fields: ['logo', 'logo_lighter'] }))
+  directus.request(readItem('ai_for_impact', 1, { fields: ['logo', 'logo_lighter', 'our_impact', 'course_url'] }))
 );
 
 const logoId = computed(() => site.value?.[props.logoField] ?? '');
-
+const impactFileUrl = computed(() => {
+  const id = assetFileId(site.value?.our_impact);
+  return id ? assetDownloadUrl(id) : '';
+});
 const mobileMenuOpen = ref(false);
 const isSticky = ref(false);
 
@@ -78,12 +81,30 @@ onBeforeUnmount(() => {
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Meet the Fellows 
         </NuxtLink>
-        <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__link">
+        <a
+          v-if="impactFileUrl"
+          :href="impactFileUrl"
+          download
+          target="_blank"
+          rel="noopener"
+          class="header__link"
+        >
+          <img src="/images/arrow-down.svg" alt="" class="header__icon" />
+          Our Impact
+        </a>
+        <!-- <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__link">
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Information for Partners
-        </a>
-        <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__link">
-          <img src="/images/arrow-down.svg" alt="" class="header__icon" />
+        </a> -->
+     
+        <a
+          v-if="site?.course_url"
+          :href="site.course_url"
+          target="_blank"
+          rel="noopener"
+          class="header__link"
+        >
+          <img src="/images/arrow.svg" alt="" class="header__icon" />
           Course
         </a>
         <a href="https://burnes.northeastern.edu/upcoming-events/" target="_blank" rel="noopener" class="header__link">
@@ -114,14 +135,33 @@ onBeforeUnmount(() => {
         <img src="/images/arrow-blue.svg" alt="" class="header__icon" />
         Meet the Fellows
       </NuxtLink>
-      <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__mobile-link">
+      <a
+        v-if="impactFileUrl"
+        :href="impactFileUrl"
+        download
+        target="_blank"
+        rel="noopener"
+        class="header__mobile-link"
+        @click="mobileMenuOpen = false"
+      >
+        <img src="/images/arrow-up-blue.svg" alt="" class="header__icon" />
+        Our Impact
+      </a>
+      <a
+        v-if="site?.course_url"
+        :href="site.course_url"
+        target="_blank"
+        rel="noopener"
+        class="header__mobile-link"
+        @click="mobileMenuOpen = false"
+      >
+        <img src="/images/arrow-up-blue.svg" alt="" class="header__icon" />
+        Course
+      </a>
+      <!-- <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__mobile-link">
           <img src="/images/arrow-right.svg" alt="" class="header__icon" />
           Information for Partners
-        </a>
-        <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__mobile-link">
-          <img src="/images/arrow-down.svg" alt="" class="header__icon" />
-          Course
-        </a>
+        </a> -->
       <a href="https://burnes.northeastern.edu/upcoming-events/" target="_blank" rel="noopener" class="header__mobile-link">
         <img src="/images/arrow-up-blue.svg" alt="" class="header__icon" />
         Events
@@ -142,7 +182,8 @@ onBeforeUnmount(() => {
   z-index: 999;
   width: 100%;
   background-color: var(--header-bg);
-  padding: 20px 40px;
+  padding: clamp(12px, 2.5vw, 20px) clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
   transition: box-shadow 0.25s ease, background-image 0.25s ease;
 }
 
@@ -167,10 +208,15 @@ onBeforeUnmount(() => {
 
 
 .header__inner {
+  container-type: inline-size;
+  container-name: header-inner;
   display: flex;
   align-items: center;
-  gap: 3.5rem;
-  height: 70px;
+  gap: min(5rem, 5cqi);
+  width: 100%;
+  max-width: 100%;
+  height: clamp(60px, 9vh, 70px);
+  box-sizing: border-box;
 }
 
 .header__logo {
@@ -180,14 +226,23 @@ onBeforeUnmount(() => {
 }
 
 .header__logo :deep(.header__logo-img) {
-  height: 50px;
+  height: clamp(40px, 5vw, 50px);
   width: auto;
 }
 
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 50px;
+  flex-wrap: wrap;
+  max-width: 100%;
+  min-width: 0;
+  column-gap: min(2rem, max(0.5rem, 3.5cqw));
+  row-gap: 0.5rem;
+}
+
+.header__nav .header__link {
+  font-size: clamp(16px, 1.5cqw, 22px);
+  line-height: 1.27;
 }
 
 .header__hamburger {

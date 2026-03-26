@@ -25,9 +25,14 @@ function setSlide(index: number) {
 
 <template>
     <div class = "carousel">
-        <button class="carousel__arrow carousel__arrow--left" @click="prev" aria-label="Previous project">
-            <img src="/images/arrow-left.svg" alt="" class="carousel__arrow-icon" />
-      </button>
+        <button
+          type="button"
+          class="carousel__arrow carousel__arrow--left"
+          aria-label="Previous project"
+          @click.stop.prevent="prev"
+        >
+          <span class="carousel__arrow-icon carousel__arrow-icon--left" aria-hidden="true" />
+        </button>
 
       <div class="carousel__stage">
         <div v-for="(project, index) in projects"
@@ -60,9 +65,14 @@ function setSlide(index: number) {
         />
     </div>
       </div>
-      <button class="carousel__arrow carousel__arrow--right" @click="next" aria-label="Next project">
-  <img src="/images/arrow-right.svg" alt="" class="carousel__arrow-icon" />
-</button>
+      <button
+        type="button"
+        class="carousel__arrow carousel__arrow--right"
+        aria-label="Next project"
+        @click.stop.prevent="next"
+      >
+        <span class="carousel__arrow-icon carousel__arrow-icon--right" aria-hidden="true" />
+      </button>
 
     </div>
 
@@ -77,6 +87,8 @@ function setSlide(index: number) {
 }
 
 .carousel__arrow {
+  position: relative;
+  z-index: 2;
   background: none;
   border: none;
   cursor: pointer;
@@ -91,8 +103,19 @@ function setSlide(index: number) {
 }
 
 .carousel__arrow-icon {
+  display: block;
   width: 24px;
   height: 24px;
+  pointer-events: none;
+  background: center / contain no-repeat;
+}
+
+.carousel__arrow-icon--left {
+  background-image: url('/images/arrow-left.svg');
+}
+
+.carousel__arrow-icon--right {
+  background-image: url('/images/arrow-right.svg');
 }
 
 .carousel__stage {
@@ -231,6 +254,11 @@ function setSlide(index: number) {
   .carousel__arrow-icon {
     width: 18px;
     height: 18px;
+  }
+
+  .carousel__arrow-icon--left,
+  .carousel__arrow-icon--right {
+    background-size: contain;
   }
 
   .carousel__slide {
