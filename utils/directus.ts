@@ -118,7 +118,7 @@ export async function fetchAllProjects(){
 const AI_FOR_IMPACT_PRIMARY_TAG = 'AI for Impact';
 
 export async function fetchRebootBlogAiForImpact(limit = 3) {
-  return directus.request(
+  const rows = await directus.request(
     readItems('reboot_democracy_blog', {
       fields: [
         'id',
@@ -141,6 +141,7 @@ export async function fetchRebootBlogAiForImpact(limit = 3) {
       limit,
     })
   );
+  return Array.isArray(rows) ? rows.slice(0, limit) : rows;
 }
 
 /** Public link for a Reboot blog row (Directus fields). */

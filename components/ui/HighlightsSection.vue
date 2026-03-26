@@ -14,11 +14,15 @@ const props = withDefaults(defineProps<{
 const { data: page } = await useAsyncData('highlights-data', fetchAiForImpact);
 const highlights = computed(() => filterPublished(page.value?.highlights, 'ai_for_impact_highlights_id'));
 
+const REBOOT_BLOG_LIMIT = 3;
+
 const { data: rebootBlogRaw } = await useAsyncData('reboot-blog-ai-for-impact', () =>
-  fetchRebootBlogAiForImpact(3)
+  fetchRebootBlogAiForImpact(REBOOT_BLOG_LIMIT)
 );
 
-const rebootBlogPosts = computed(() => (rebootBlogRaw.value ?? []) as RebootBlogPost[]);
+const rebootBlogPosts = computed(
+  () => (rebootBlogRaw.value ?? []).slice(0, REBOOT_BLOG_LIMIT) as RebootBlogPost[]
+);
 
 function blogToProject(post: RebootBlogPost): Project {
   return {
