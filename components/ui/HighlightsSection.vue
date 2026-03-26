@@ -93,7 +93,7 @@ function blogToProject(post: RebootBlogPost): Project {
 .latest-news__heading {
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: clamp(22px, 2.5cqw, 28px);
+  font-size: 32px;
   line-height: 1.2;
   color: var(--color-white);
   margin: 0 0 2rem;
@@ -102,7 +102,7 @@ function blogToProject(post: RebootBlogPost): Project {
 .latest-news__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 380px));
-  gap: clamp(2rem, 4vw, 3.75rem);
+  gap: 1rem;
   justify-content: center;
   align-items: stretch;
 }

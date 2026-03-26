@@ -117,7 +117,7 @@ export async function fetchAllProjects(){
 
 const AI_FOR_IMPACT_PRIMARY_TAG = 'AI for Impact';
 
-export async function fetchRebootBlogAiForImpact(limit = 4) {
+export async function fetchRebootBlogAiForImpact(limit = 3) {
   return directus.request(
     readItems('reboot_democracy_blog', {
       fields: [
