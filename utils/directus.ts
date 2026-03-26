@@ -108,10 +108,9 @@ export async function fetchAllProjects(){
           'subtitle',
           'authors',
           'repo_link',
+          'product_type',
         ],
-        filter:{ status : {
-          _eq: 'published'
-        }}
+        filter: { status: { _eq: 'published' } },
       })
-  )
+  );
 }

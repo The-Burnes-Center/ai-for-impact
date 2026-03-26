@@ -7,6 +7,7 @@ export interface Project {
   subtitle: string;
   authors: string;
   repo_link: string;
+  product_type?: string | { name?: string; title?: string } | null;
   long_description?: string;
   metric_quote?: string;
   slide_deck?: string | null;
