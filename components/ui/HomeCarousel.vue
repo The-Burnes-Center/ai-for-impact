@@ -2,19 +2,24 @@
 import type { Project } from '~/models';
 
 
-// add props to accept
-
-defineProps<{
+const props = defineProps<{
   projects: Project[];
 }>();
 
-const activeIndex = ref(0); // tracks the index of active project as ref(0) creates a reactive variable
-const next = () =>{
-    activeIndex.value = (activeIndex.value + 1) % props.projects.length; // % ensures if length finished loop back to 0
+const activeIndex = ref(0);
+
+const next = () => {
+  activeIndex.value = (activeIndex.value + 1) % props.projects.length;
 };
-const prev = () =>{
-    activeIndex.value = (activeIndex.value - 1 + props.projects.length) % props.projects.length;
+
+const prev = () => {
+  activeIndex.value =
+    (activeIndex.value - 1 + props.projects.length) % props.projects.length;
 };
+
+function setSlide(index: number) {
+  activeIndex.value = index;
+}
 
 </script>
 
@@ -50,7 +55,7 @@ const prev = () =>{
         :key="index"
         class="carousel__dot"
         :class="{ 'carousel__dot--active': index === activeIndex }"
-        @click="activeIndex = index"
+        @click="setSlide(index)"
         :aria-label="`Go to project ${index + 1}`"
         />
     </div>
