@@ -1,11 +1,25 @@
 <script setup lang="ts">
 import type { Project } from '~/models';
 
-const props = defineProps<{
-  project: Project;
-}>();
+const props = withDefaults(
+  defineProps<{
+    project: Project;
+    externalHref?: string;
+    openInNewTab?: boolean;
+  }>(),
+  { openInNewTab: false }
+);
 
 function goToProduct() {
+  const url = props.externalHref?.trim();
+  if (url) {
+    if (props.openInNewTab && import.meta.client) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      navigateTo(url, { external: true });
+    }
+    return;
+  }
   navigateTo(`/product/${props.project.id}`);
 }
 
@@ -22,7 +36,9 @@ function onCardKeydown(e: KeyboardEvent) {
     class="card"
     role="link"
     tabindex="0"
-    :aria-label="`View project: ${project.project_title}`"
+    :aria-label="
+      externalHref ? `Open article: ${project.project_title}` : `View project: ${project.project_title}`
+    "
     @click="goToProduct"
     @keydown="onCardKeydown"
   >

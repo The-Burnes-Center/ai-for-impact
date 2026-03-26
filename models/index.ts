@@ -28,6 +28,18 @@ export interface Metric {
   label: string;
 }
 
+export interface RebootBlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  image: string | null;
+  fullURL?: string | null;
+  external_link?: string | null;
+  date?: string | null;
+  one_line?: string | null;
+  excerpt?: string | null;
+}
+
 export interface AiForImpact {
   id: number;
   status: string;

@@ -114,3 +114,44 @@ export async function fetchAllProjects(){
       })
   );
 }
+
+const AI_FOR_IMPACT_PRIMARY_TAG = 'AI for Impact';
+
+export async function fetchRebootBlogAiForImpact(limit = 4) {
+  return directus.request(
+    readItems('reboot_democracy_blog', {
+      fields: [
+        'id',
+        'title',
+        'slug',
+        'image',
+        'fullURL',
+        'external_link',
+        'date',
+        'one_line',
+        'excerpt',
+      ],
+      filter: {
+        _and: [
+          { status: { _eq: 'published' } },
+          { primary_tag: { _eq: AI_FOR_IMPACT_PRIMARY_TAG } },
+        ],
+      },
+      sort: ['-date', '-date_created'],
+      limit,
+    })
+  );
+}
+
+/** Public link for a Reboot blog row (Directus fields). */
+export function rebootBlogPostUrl(post: {
+  slug: string;
+  fullURL?: string | null;
+  external_link?: string | null;
+}) {
+  return (
+    post.external_link?.trim() ||
+    post.fullURL?.trim() ||
+    `https://rebootdemocracy.ai/blog/${post.slug}`
+  );
+}
