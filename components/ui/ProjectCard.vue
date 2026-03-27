@@ -6,8 +6,9 @@ const props = withDefaults(
     project: Project;
     externalHref?: string;
     openInNewTab?: boolean;
+    hideDescription?: boolean;
   }>(),
-  { openInNewTab: false }
+  { openInNewTab: false, hideDescription: false }
 );
 
 function goToProduct() {
@@ -54,7 +55,11 @@ function onCardKeydown(e: KeyboardEvent) {
 
     <div v-if="project.subtitle" class="card__subtitle" v-html="project.subtitle" />
 
-    <div v-if="project.project_description" class="card__desc" v-html="project.project_description" />
+    <div
+      v-if="!hideDescription && project.project_description"
+      class="card__desc"
+      v-html="project.project_description"
+    />
 
     <p v-if="project.authors" class="card__author">By {{ project.authors }}</p>
 

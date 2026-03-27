@@ -16,13 +16,16 @@ const highlights = computed(() => filterPublished(page.value?.highlights, 'ai_fo
 
 const REBOOT_BLOG_LIMIT = 3;
 
-const { data: rebootBlogRaw } = await useAsyncData('reboot-blog-ai-for-impact', () =>
-  fetchRebootBlogAiForImpact(REBOOT_BLOG_LIMIT)
-);
+const rebootBlogPosts = ref<RebootBlogPost[]>([]);
 
-const rebootBlogPosts = computed(
-  () => (rebootBlogRaw.value ?? []).slice(0, REBOOT_BLOG_LIMIT) as RebootBlogPost[]
-);
+onMounted(async () => {
+  try {
+    const rows = await fetchRebootBlogAiForImpact(REBOOT_BLOG_LIMIT);
+    rebootBlogPosts.value = (rows ?? []).slice(0, REBOOT_BLOG_LIMIT) as RebootBlogPost[];
+  } catch {
+    rebootBlogPosts.value = [];
+  }
+});
 
 function blogToProject(post: RebootBlogPost): Project {
   return {
@@ -30,7 +33,7 @@ function blogToProject(post: RebootBlogPost): Project {
     status: 'published',
     project_image: post.image,
     project_title: post.title,
-    project_description: post.excerpt ?? '',
+    project_description: '',
     subtitle: post.one_line ? `<p>${post.one_line}</p>` : '',
     authors: '',
     repo_link: '',
@@ -57,6 +60,7 @@ function blogToProject(post: RebootBlogPost): Project {
             :project="blogToProject(post)"
             :external-href="rebootBlogPostUrl(post)"
             open-in-new-tab
+            hide-description
           />
         </div>
       </div>
