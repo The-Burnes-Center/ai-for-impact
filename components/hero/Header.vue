@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { directus, assetDownloadUrl, assetFileId } from '~/utils/directus';
+import { directus, assetUrl, assetFileId } from '~/utils/directus';
 import { readItem } from '@directus/sdk';
 
 const props = withDefaults(defineProps<{
@@ -32,7 +32,7 @@ const { data: site } = await useAsyncData('header-logo', () =>
 const logoId = computed(() => site.value?.[props.logoField] ?? '');
 const impactFileUrl = computed(() => {
   const id = assetFileId(site.value?.our_impact);
-  return id ? assetDownloadUrl(id) : '';
+  return id ? assetUrl(id) : '';
 });
 const mobileMenuOpen = ref(false);
 const isSticky = ref(false);
@@ -84,12 +84,11 @@ onBeforeUnmount(() => {
         <a
           v-if="impactFileUrl"
           :href="impactFileUrl"
-          download
           target="_blank"
           rel="noopener"
           class="header__link"
         >
-          <img src="/images/arrow-down.svg" alt="" class="header__icon" />
+          <img src="/images/arrow.svg" alt="" class="header__icon" />
           Our Impact
         </a>
         <!-- <a href="https://burnes.northeastern.edu/" target="_blank" rel="noopener" class="header__link">
@@ -138,7 +137,6 @@ onBeforeUnmount(() => {
       <a
         v-if="impactFileUrl"
         :href="impactFileUrl"
-        download
         target="_blank"
         rel="noopener"
         class="header__mobile-link"
