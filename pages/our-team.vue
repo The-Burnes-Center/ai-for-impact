@@ -180,7 +180,7 @@ const directorBio = computed(() => newsData.value || director.value?.description
   max-width: var(--max-width);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(260px, 380px) 1fr;
   gap: 60px;
   align-items: center;
 }
@@ -188,6 +188,7 @@ const directorBio = computed(() => newsData.value || director.value?.description
 .director__image-wrapper {
   position: relative;
   width: 100%;
+  min-width: 0;
   max-width: 380px;
   aspect-ratio: 3 / 4;
   overflow: hidden;
