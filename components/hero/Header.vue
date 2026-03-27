@@ -110,7 +110,7 @@ onBeforeUnmount(() => {
           <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
           Events
         </a>
-        <a href="https://burnes.northeastern.edu/news/" target="_blank" rel="noopener" class="header__link">
+        <a href="https://burnes.northeastern.edu/ai-for-impact-coop/ai4impact-news/" target="_blank" rel="noopener" class="header__link">
           <img src="/images/arrow.svg" alt="" class="header__icon header__icon--external" />
           News
         </a>
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
         <img src="/images/arrow-up-blue.svg" alt="" class="header__icon" />
         Events
       </a>
-      <a href="https://burnes.northeastern.edu/news/" target="_blank" rel="noopener" class="header__mobile-link">
+      <a href="https://burnes.northeastern.edu/ai-for-impact-coop/ai4impact-news/" target="_blank" rel="noopener" class="header__mobile-link">
         <img src="/images/arrow-up-blue.svg" alt="" class="header__icon" />
         News
       </a>
