@@ -52,7 +52,7 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: 'https://use.typekit.net/htq7tpa.css',
         },
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/png', href: '/images/image.png' },
       ],
     },
   },
