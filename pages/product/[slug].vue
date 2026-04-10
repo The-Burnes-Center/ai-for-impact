@@ -19,10 +19,11 @@ const projectTitle = computed(() => project.value?.project_title ?? 'Project');
 const projectDesc = computed(() =>
   truncateMeta(stripHtml(project.value?.project_description ?? project.value?.subtitle ?? ''))
 );
+const { origin } = useRequestURL();
 const projectImage = computed(() =>
   project.value?.project_image
     ? imageUrl(project.value.project_image, 'hero')
-    : '/images/og-image.png'
+    : `${origin}/images/og-image.png`
 );
 
 useSeoMeta({

@@ -12,9 +12,10 @@ const desc = computed(() =>
   truncateMeta(stripHtml(siteData.value?.about) || 'AI for Impact builds AI tools for government and civic organizations.')
 );
 
+const { origin } = useRequestURL();
 const ogImage = computed(() => {
   const first = (projects.value ?? [])[0];
-  return imageUrl(first?.project_image, 'hero') || '/images/og-image.png';
+  return imageUrl(first?.project_image, 'hero') || `${origin}/images/og-image.png`;
 });
 
 useSeoMeta({

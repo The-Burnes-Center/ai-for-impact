@@ -8,8 +8,9 @@ const desc = 'Meet the faculty, co-ops, and fellows behind AI for Impact — a p
 
 const { data: page } = await useAsyncData('our-team', fetchAiForImpact);
 
+const { origin } = useRequestURL();
 const ogImage = computed(() =>
-  imageUrl(page.value?.team_image ?? page.value?.logo, 'hero') || '/images/og-image.png'
+  imageUrl(page.value?.team_image ?? page.value?.logo, 'hero') || `${origin}/images/og-image.png`
 );
 
 useSeoMeta({

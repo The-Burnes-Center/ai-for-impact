@@ -13,9 +13,9 @@ const description = computed(() =>
   )
 );
 
-// Directus asset URLs are already absolute — no need for siteOrigin for images
+const { origin } = useRequestURL();
 const ogImage = computed(() =>
-  imageUrl(page.value?.logo ?? page.value?.team_image, 'hero') || '/images/og-image.png'
+  imageUrl(page.value?.logo ?? page.value?.team_image, 'hero') || `${origin}/images/og-image.png`
 );
 
 useSeoMeta({
