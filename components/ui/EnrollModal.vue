@@ -142,6 +142,7 @@ onUnmounted(() => {
   inset: 0;
   background: rgba(15, 25, 45, 0.6);
   z-index: 10050;
+  overflow-x: hidden;
   overflow-y: auto;
   display: flex;
   align-items: center;
@@ -152,7 +153,7 @@ onUnmounted(() => {
 .modal {
   position: relative;
   display: flex;
-  width: 800px;
+  width: min(800px, 100%);
   max-width: 100%;
   padding: 20px;
   flex-direction: column;

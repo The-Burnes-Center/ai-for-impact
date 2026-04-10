@@ -88,8 +88,9 @@ function blogToProject(post: RebootBlogPost): Project {
 
 .latest-news {
   background-color: var(--color-dark);
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: calc(100% + 160px);
+  margin-left: -80px;
+  margin-right: -80px;
   margin-top: 0;
   padding: 60px clamp(20px, 4vw, 80px) 70px;
   box-sizing: border-box;
@@ -136,6 +137,9 @@ function blogToProject(post: RebootBlogPost): Project {
   }
 
   .latest-news {
+    width: calc(100% + 3rem);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
     padding: 40px 1.5rem 48px;
   }
 
