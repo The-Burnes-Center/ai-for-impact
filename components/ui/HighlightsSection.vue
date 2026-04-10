@@ -30,6 +30,7 @@ onMounted(async () => {
 function blogToProject(post: RebootBlogPost): Project {
   return {
     id: post.id,
+    slug: post.slug,
     status: 'published',
     project_image: post.image,
     project_title: post.title,

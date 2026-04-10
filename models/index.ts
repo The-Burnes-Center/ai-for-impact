@@ -1,5 +1,6 @@
 export interface Project {
   id: number;
+  slug: string;
   status: string;
   project_image: string | null;
   project_title: string;

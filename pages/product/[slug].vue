@@ -15,6 +15,18 @@ if (!project.value) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' });
 }
 
+watch(
+  project,
+  (p) => {
+    if (!p?.slug) return;
+    const param = String(route.params.slug ?? '');
+    if (param !== p.slug) {
+      navigateTo(`/product/${p.slug}`, { replace: true });
+    }
+  },
+  { immediate: true }
+);
+
 const projectTitle = computed(() => project.value?.project_title ?? 'Project');
 const projectDesc = computed(() =>
   truncateMeta(stripHtml(project.value?.project_description ?? project.value?.subtitle ?? ''))

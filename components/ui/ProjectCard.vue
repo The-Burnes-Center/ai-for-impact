@@ -21,7 +21,7 @@ function goToProduct() {
     }
     return;
   }
-  navigateTo(`/product/${props.project.id}`);
+  navigateTo(`/product/${props.project.slug}`);
 }
 
 function onCardKeydown(e: KeyboardEvent) {

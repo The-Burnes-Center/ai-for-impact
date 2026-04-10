@@ -1,4 +1,4 @@
-import { createDirectus, rest, readItem, aggregate, readItems } from '@directus/sdk';
+import { createDirectus, rest, readItem, readItems, aggregate } from '@directus/sdk';
 import type { AiForImpactModal } from '~/types/ai-for-impact-modal';
 
 export const API_URL = 'https://directus.theburnescenter.org';
@@ -32,6 +32,19 @@ export function imageUrl(
   return `${API_URL}/assets/${fileId}?width=${width}&quality=80`;
 }
 
+const aiForImpactProjectFields = [
+  'id',
+  'slug',
+  'status',
+  'project_image',
+  'project_title',
+  'project_description',
+  'subtitle',
+  'authors',
+  'repo_link',
+  'product_type',
+] as const;
+
 export async function fetchAiForImpact() {
   return directus.request(
     readItem('ai_for_impact', 1, {
@@ -42,7 +55,7 @@ export async function fetchAiForImpact() {
         'syllabus',
         'latest_report',
         'team_image',
-        { projects: [{ ai_for_impact_projects_id: ['*'] }] },
+        { projects: [{ ai_for_impact_projects_id: [...aiForImpactProjectFields] }] },
         { highlights: [{ ai_for_impact_highlights_id: ['*'] }] },
         { metrics: [{ ai_for_impact_metrics_id: ['*'] }] },
       ],
@@ -76,43 +89,63 @@ export async function fetchTeamMembers() {
   );
 }
 
-export async function fetchProject(id: number | string) {
+const projectDetailFields = [
+  'id',
+  'slug',
+  'project_image',
+  'project_title',
+  'project_description',
+  'subtitle',
+  'authors',
+  'repo_link',
+  'long_description',
+  'metric_quote',
+  'slide_deck',
+  'additional_project_images.directus_files_id',
+] as const;
+
+/** Load a published project by URL slug. Numeric `param` still resolves (legacy /product/123 links). */
+export async function fetchProject(param: string) {
+  const published = { status: { _eq: 'published' } };
+  const query = {
+    fields: [...projectDetailFields],
+    filter: { _and: [published, { slug: { _eq: param } }] },
+    limit: 1,
+  };
+
+  const bySlug = await directus.request(readItems('ai_for_impact_projects', query));
+  if (bySlug?.[0]) return bySlug[0];
+
+  if (/^\d+$/.test(param)) {
+    const byId = await directus.request(
+      readItems('ai_for_impact_projects', {
+        fields: [...projectDetailFields],
+        filter: { _and: [published, { id: { _eq: Number(param) } }] },
+        limit: 1,
+      })
+    );
+    return byId?.[0] ?? null;
+  }
+
+  return null;
+}
+
+export async function fetchAllProjects() {
   return directus.request(
-    readItem('ai_for_impact_projects', id, {
+    readItems('ai_for_impact_projects', {
       fields: [
         'id',
+        'slug',
         'project_image',
         'project_title',
         'project_description',
         'subtitle',
         'authors',
         'repo_link',
-        'long_description',
-        'metric_quote',
-        'slide_deck',
-        'additional_project_images.directus_files_id',
+        'product_type',
       ],
       filter: { status: { _eq: 'published' } },
     })
-  );
-}
-
-export async function fetchAllProjects(){
-  return directus.request(
-    readItems(
-      'ai_for_impact_projects', {
-        fields: [
-          'id',
-          'project_image',
-          'project_title',
-          'project_description',
-          'subtitle',
-          'authors',
-          'repo_link',
-          'product_type',
-        ],
-        filter: { status: { _eq: 'published' } },
-      })
   );
 }
 
