@@ -1,4 +1,5 @@
 import { createDirectus, rest, readItem, aggregate, readItems } from '@directus/sdk';
+import type { AiForImpactModal } from '~/types/ai-for-impact-modal';
 
 export const API_URL = 'https://directus.theburnescenter.org';
 
@@ -142,6 +143,30 @@ export async function fetchRebootBlogAiForImpact(limit = 3) {
     })
   );
   return Array.isArray(rows) ? rows.slice(0, limit) : rows;
+}
+
+export async function fetchModal(): Promise<AiForImpactModal | null> {
+  const rows = await directus.request(
+    readItems('ai_for_impact_modal', {
+      fields: [
+        'id',
+        'status',
+        'title',
+        'description',
+        'visibility',
+        'button_url',
+        'button_text',
+        'pill_text',
+        'pill_tags',
+      ],
+      filter: { status: { _eq: 'published' } },
+      limit: 1,
+    })
+  );
+  /* Directus may return `data` as one object (singleton-style) or an array */
+  const row = Array.isArray(rows) ? rows[0] : rows;
+  if (!row || typeof row !== 'object') return null;
+  return row as AiForImpactModal;
 }
 
 /** Public link for a Reboot blog row (Directus fields). */
