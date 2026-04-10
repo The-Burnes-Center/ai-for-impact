@@ -42,15 +42,17 @@ function blogToProject(post: RebootBlogPost): Project {
 </script>
 
 <template>
-  <section v-if="highlights.length || rebootBlogPosts.length" class="highlights-section">
-    <div v-if="highlights.length" class="highlights-section__content">
-      <UiHighlightsCarousel :highlights="highlights" />
-      <div v-if="props.showButton" class="highlights-section__action">
-        <UiPrimaryButton to="/product" variant="primary" icon="/images/arrow-right.svg" min-width="298px">Explore all projects</UiPrimaryButton>
+  <div v-if="highlights.length || rebootBlogPosts.length" class="highlights-block">
+    <section v-if="highlights.length" class="highlights-section">
+      <div class="highlights-section__content">
+        <UiHighlightsCarousel :highlights="highlights" />
+        <div v-if="props.showButton" class="highlights-section__action">
+          <UiPrimaryButton to="/product" variant="primary" icon="/images/arrow-right.svg" min-width="298px">Explore all projects</UiPrimaryButton>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div v-if="rebootBlogPosts.length" class="latest-news">
+    <section v-if="rebootBlogPosts.length" class="latest-news">
       <div class="latest-news__inner">
         <h2 class="latest-news__heading">Latest News</h2>
         <div class="latest-news__grid">
@@ -64,16 +66,19 @@ function blogToProject(post: RebootBlogPost): Project {
           />
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <style scoped>
+.highlights-block {
+  margin-top: 80px;
+  border-bottom: 1.5px solid rgba(31, 45, 69, 0.15);
+}
+
 .highlights-section {
   background-color: var(--color-cream);
-  margin-top: 80px;
   padding: 100px 80px 0;
-  border-bottom: 1.5px solid rgba(31, 45, 69, 0.15);
 }
 
 .highlights-section__content {
@@ -88,10 +93,8 @@ function blogToProject(post: RebootBlogPost): Project {
 
 .latest-news {
   background-color: var(--color-dark);
-  width: calc(100% + 160px);
-  margin-left: -80px;
-  margin-right: -80px;
-  margin-top: 0;
+  width: 100%;
+  margin: 0;
   padding: 60px clamp(20px, 4vw, 80px) 70px;
   box-sizing: border-box;
 }
@@ -137,9 +140,6 @@ function blogToProject(post: RebootBlogPost): Project {
   }
 
   .latest-news {
-    width: calc(100% + 3rem);
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
     padding: 40px 1.5rem 48px;
   }
 
