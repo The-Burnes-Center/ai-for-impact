@@ -1,16 +1,40 @@
 <script setup lang="ts">
 import type { Project } from '~/models';
-import { fetchAllProjects } from '~/utils/directus';
+import { fetchAllProjects, fetchAiForImpact, imageUrl } from '~/utils/directus';
+import { stripHtml, truncateMeta } from '~/utils/seo';
 
-const { data: projects } = await useAsyncData('all-projects', fetchAllProjects);
+const [{ data: projects }, { data: siteData }] = await Promise.all([
+  useAsyncData('all-projects', fetchAllProjects),
+  useAsyncData('ai-for-impact', fetchAiForImpact),
+]);
+
+const desc = computed(() =>
+  truncateMeta(stripHtml(siteData.value?.about) || 'AI for Impact builds AI tools for government and civic organizations.')
+);
+
+const ogImage = computed(() => {
+  const first = (projects.value ?? [])[0];
+  return imageUrl(first?.project_image, 'hero') || '/images/og-image.png';
+});
+
+useSeoMeta({
+  title: 'Projects',
+  ogTitle: 'Projects | AI for Impact',
+  description: () => desc.value,
+  ogDescription: () => desc.value,
+  ogUrl: useRequestURL().href,
+  ogImage: () => ogImage.value,
+  ogImageAlt: 'AI for Impact Projects',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Projects | AI for Impact',
+  twitterDescription: () => desc.value,
+  twitterImage: () => ogImage.value,
+});
 
 const projectList = computed(() => (projects.value ?? []) as Project[]);
 
 const searchQuery = ref('');
 const productTypeFilter = ref<string>('');
-
-const stripHtml = (s?: string | null) =>
-  String(s ?? '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 function productTypeLabel(p: Project): string {
   const t = p.product_type;

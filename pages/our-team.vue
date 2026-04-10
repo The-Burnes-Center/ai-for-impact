@@ -1,10 +1,30 @@
 <script setup lang="ts">
 import { readItems } from '@directus/sdk';
-import { fetchAiForImpact, fetchTeamMembers, directus } from '~/utils/directus';
+import { fetchAiForImpact, fetchTeamMembers, directus, imageUrl } from '~/utils/directus';
 
 definePageMeta({ layout: 'light' });
 
+const desc = 'Meet the faculty, co-ops, and fellows behind AI for Impact — a program at Northeastern University\'s Burnes Center for Social Change building AI tools for the public good.';
+
 const { data: page } = await useAsyncData('our-team', fetchAiForImpact);
+
+const ogImage = computed(() =>
+  imageUrl(page.value?.team_image ?? page.value?.logo, 'hero') || '/images/og-image.png'
+);
+
+useSeoMeta({
+  title: 'Meet the Team',
+  ogTitle: 'Meet the Team | AI for Impact',
+  description: desc,
+  ogDescription: desc,
+  ogUrl: useRequestURL().href,
+  ogImage: () => ogImage.value,
+  ogImageAlt: 'AI for Impact Team',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Meet the Team | AI for Impact',
+  twitterDescription: desc,
+  twitterImage: () => ogImage.value,
+});
 const { data: team } = await useAsyncData('team-members', fetchTeamMembers);
 const { data: newsData } = await useAsyncData(
   'bio-news',

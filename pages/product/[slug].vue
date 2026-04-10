@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { fetchProject, assetUrl } from '~/utils/directus';
+import { fetchProject, assetUrl, imageUrl } from '~/utils/directus';
+import { stripHtml, truncateMeta } from '~/utils/seo';
 
 definePageMeta({ layout: 'light' });
 
@@ -13,6 +14,31 @@ const { data: project } = await useAsyncData(`project-${slug}`, () =>
 if (!project.value) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' });
 }
+
+const projectTitle = computed(() => project.value?.project_title ?? 'Project');
+const projectDesc = computed(() =>
+  truncateMeta(stripHtml(project.value?.project_description ?? project.value?.subtitle ?? ''))
+);
+const projectImage = computed(() =>
+  project.value?.project_image
+    ? imageUrl(project.value.project_image, 'hero')
+    : '/images/og-image.png'
+);
+
+useSeoMeta({
+  title: () => projectTitle.value,
+  ogTitle: () => `${projectTitle.value} | AI for Impact`,
+  description: () => projectDesc.value,
+  ogDescription: () => projectDesc.value,
+  ogUrl: useRequestURL().href,
+  ogImage: () => projectImage.value,
+  ogImageAlt: () => projectTitle.value,
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => `${projectTitle.value} | AI for Impact`,
+  twitterDescription: () => projectDesc.value,
+  twitterImage: () => projectImage.value,
+});
 
 const additionalProjectImages = computed(() =>
   project.value?.additional_project_images

@@ -1,10 +1,36 @@
 <script setup lang="ts">
 import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl, fetchModal } from '~/utils/directus';
+import { stripHtml, truncateMeta } from '~/utils/seo';
 import type { AiForImpactModal } from '~/types/ai-for-impact-modal';
 
 const { data: page } = await useAsyncData('ai-for-impact', fetchAiForImpact);
 const { data: projectCount } = await useAsyncData('project-count', fetchProjectCount);
 const { data: modal } = await useAsyncData('ai-for-impact-modal', fetchModal);
+
+const description = computed(() =>
+  truncateMeta(
+    stripHtml(page.value?.about)
+  )
+);
+
+// Directus asset URLs are already absolute — no need for siteOrigin for images
+const ogImage = computed(() =>
+  imageUrl(page.value?.logo ?? page.value?.team_image, 'hero') || '/images/og-image.png'
+);
+
+useSeoMeta({
+  title: 'AI for Impact',
+  ogTitle: 'AI for Impact',
+  description: () => description.value,
+  ogDescription: () => description.value,
+  ogUrl: useRequestURL().href,
+  ogImage: () => ogImage.value,
+  ogImageAlt: 'AI for Impact',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'AI for Impact',
+  twitterDescription: () => description.value,
+  twitterImage: () => ogImage.value,
+});
 
 function modalVisibilityOn(m: AiForImpactModal) {
   const v = m.visibility;
