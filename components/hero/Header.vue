@@ -7,14 +7,12 @@ const props = withDefaults(defineProps<{
   textColor?: string;
   hoverColor?: string;
   iconFilter?: string;
-  logoField?: string;
   stickyShadow?: boolean;
 }>(), {
   bgColor: 'var(--color-dark)',
   textColor: 'var(--color-cream)',
   hoverColor: 'var(--color-accent)',
   iconFilter: 'brightness(0) invert(1)',
-  logoField: 'logo',
   stickyShadow: true,
 });
 
@@ -26,10 +24,14 @@ const headerStyle = computed(() => ({
 }));
 
 const { data: site } = await useAsyncData('header-logo', () =>
-  directus.request(readItem('ai_for_impact', 1, { fields: ['logo', 'logo_lighter', 'our_impact', 'course_url'] }))
+  directus.request(readItem('ai_for_impact', 1, { fields: ['our_impact', 'course_url'] }))
 );
 
-const logoId = computed(() => site.value?.[props.logoField] ?? '');
+const wordmarkSrc = computed(() =>
+  props.bgColor === 'var(--color-cream)'
+    ? '/images/afi-wordmark.svg'
+    : '/images/afi-wordmark-negative.svg'
+);
 const impactFileUrl = computed(() => {
   const id = assetFileId(site.value?.our_impact);
   return id ? assetUrl(id) : '';
@@ -62,12 +64,13 @@ onBeforeUnmount(() => {
   >
     <div class="header__inner">
       <NuxtLink v-if="!mobileMenuOpen" to="/" class="header__logo">
-        <UiDirectusImg
-          v-if="logoId"
-          :id="logoId"
+        <img
+          :src="wordmarkSrc"
           alt="AI for Impact"
           class="header__logo-img"
-          priority
+          width="80"
+          height="60"
+          fetchpriority="high"
         />
       </NuxtLink>
 
@@ -180,9 +183,16 @@ onBeforeUnmount(() => {
   z-index: 999;
   width: 100%;
   background-color: var(--header-bg);
-  padding: clamp(12px, 2.5vw, 20px) clamp(16px, 4vw, 40px);
+  /* Align with main sections (e.g. our-team__hero: 80px inline ≥769px, 20px ≤768px) */
+  padding: clamp(12px, 2.5vw, 20px) 20px;
   box-sizing: border-box;
   transition: box-shadow 0.25s ease, background-image 0.25s ease;
+}
+
+@media (min-width: 769px) {
+  .header {
+    padding: clamp(12px, 2.5vw, 20px) 80px;
+  }
 }
 
 .header--stuck {
@@ -210,9 +220,10 @@ onBeforeUnmount(() => {
   container-name: header-inner;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
-  max-width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
   height: clamp(60px, 9vh, 70px);
   box-sizing: border-box;
 }
@@ -221,11 +232,15 @@ onBeforeUnmount(() => {
   text-decoration: none;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
-.header__logo :deep(.header__logo-img) {
-  height: clamp(40px, 5vw, 50px);
-  width: auto;
+.header__logo-img {
+  width: 80px;
+  height: 60px;
+  aspect-ratio: 80 / 60;
+  object-fit: contain;
+  display: block;
 }
 
 .header__nav {
@@ -343,10 +358,6 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 1024px) {
-  .header {
-    padding: 15px 1.5rem;
-  }
-
   .header--open {
     position: fixed;
     top: 45px;

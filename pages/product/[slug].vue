@@ -94,23 +94,35 @@ const additionalProjectImages = computed(() =>
     </section>
 
     <div v-if="project" class="product-actions">
-      <UiPrimaryButton
-        v-if="project.slide_deck"
-        :href="assetUrl(project.slide_deck)"
-        variant="primary"
-        icon="/images/arrow-down.svg"
-      >
-        Download the slide deck
-      </UiPrimaryButton>
+      <div class="product-actions__buttons">
+        <UiPrimaryButton
+          v-if="project.slide_deck"
+          :href="assetUrl(project.slide_deck)"
+          variant="primary"
+          icon="/images/arrow-down.svg"
+        >
+          Download the slide deck
+        </UiPrimaryButton>
 
-      <UiPrimaryButton
-        v-if="project.repo_link"
-        :href="project.repo_link"
-        variant="primary"
-        icon="/images/arrow.svg"
-      >
-        Go to repository
-      </UiPrimaryButton>
+        <UiPrimaryButton
+          v-if="project.repo_link"
+          :href="project.repo_link"
+          variant="primary"
+          icon="/images/arrow.svg"
+        >
+          Go to repository
+        </UiPrimaryButton>
+      </div>
+
+      <p class="product-actions__contact">
+        <span class="product-actions__contact-body">For </span>
+        <span class="product-actions__contact-emphasis">technical details</span>
+        <span class="product-actions__contact-body">, contact David Fields at </span>
+        <a
+          class="product-actions__contact-link"
+          href="mailto:d.fields@northeastern.edu"
+        >d.fields@northeastern.edu</a>
+      </p>
     </div>
   </div>
 </template>
@@ -290,20 +302,72 @@ const additionalProjectImages = computed(() =>
 }
 
 .product-actions {
-
   min-height: 270px;
   padding: 10px 80px 140px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 50px;
   background: linear-gradient(180deg, #F8F6F1 60.58%, #CFDCF5 73.08%, #ABC5F9 82.69%, #6A9CFF 92.79%, #376BD1 100%);
+}
+
+.product-actions__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.product-actions__contact {
+  margin: 0 auto;
+  max-width: 900px;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.product-actions__contact-body {
+  color: var(--black, #1f2d45);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+.product-actions__contact-emphasis {
+  color: var(--blue, #376bd1);
+  font-family: var(--font-text);
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.product-actions__contact-link {
+  color: var(--black, #1f2d45);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 }
 
 @media (max-width: 1024px) {
   .product-actions {
-    flex-direction: column;
     padding: 40px 24px 100px;
+  }
+
+  .product-actions__buttons {
+    flex-direction: column;
+    gap: 24px;
   }
 
   .product-detail {

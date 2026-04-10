@@ -6,7 +6,6 @@
       text-color="var(--color-dark)"
       hover-color="var(--color-primary)"
       :icon-filter="darkFilter"
-      logo-field="logo_lighter"
     />
     <main>
       <slot />
