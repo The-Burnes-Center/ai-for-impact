@@ -332,20 +332,61 @@ onUnmounted(() => {
 }
 
 @media (max-width: 600px) {
+  .modal-backdrop {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .modal {
+    border-radius: 24px;
+    padding: 16px;
+  }
+
   .modal__content {
-    padding: 0 20px;
-    gap: 24px;
+    padding: 0 12px;
+    gap: 20px;
+  }
+
+  .modal__pill-badge {
+    padding: 6px 14px;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.24px;
   }
 
   .modal__title :deep(h2:first-child) {
-    font-size: 26px;
-    line-height: 34px;
+    font-size: 22px;
+    line-height: 30px;
   }
 
   .modal__title :deep(h2:first-child em),
   .modal__title :deep(h2:first-child i) {
-    font-size: 26px;
-    line-height: 34px;
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .modal__title :deep(h2:last-child) {
+    font-size: 16px;
+  }
+
+  .modal__description {
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  .modal__tag {
+    font-size: 14px;
+    padding: 7px 12px;
+  }
+
+  .modal__footer {
+    padding: 16px 0;
+  }
+
+  .modal__btn {
+    padding: 14px 28px;
+    font-size: 17px;
+    line-height: 24px;
   }
 }
 </style>
