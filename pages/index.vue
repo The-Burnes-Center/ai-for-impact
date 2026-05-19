@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl, fetchModal } from '~/utils/directus';
+import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl } from '~/utils/directus';
 import { stripHtml, truncateMeta } from '~/utils/seo';
-import type { AiForImpactModal } from '~/types/ai-for-impact-modal';
 
 const { data: page } = await useAsyncData('ai-for-impact', fetchAiForImpact);
 const { data: projectCount } = await useAsyncData('project-count', fetchProjectCount);
-const { data: modal } = await useAsyncData('ai-for-impact-modal', fetchModal);
 
 const description = computed(() =>
   truncateMeta(
@@ -32,13 +30,6 @@ useSeoMeta({
   twitterImage: () => ogImage.value,
 });
 
-function modalVisibilityOn(m: AiForImpactModal) {
-  const v = m.visibility;
-  if (v === true) return true;
-  const s = String(v ?? '').trim().toLowerCase();
-  return s === 'always' || s === 'once' || s === 'true';
-}
-
 const projects = computed(() => filterPublished(page.value?.projects, 'ai_for_impact_projects_id'));
 const metrics = computed(() => filterPublished(page.value?.metrics, 'ai_for_impact_metrics_id'));
 
@@ -48,7 +39,6 @@ const aboutParagraphs = computed(() =>
 </script>
 
 <template>
-  <UiEnrollModal v-if="modal && modalVisibilityOn(modal)" :modal="modal" />
   <div v-if="page" class="page">
     <!-- Hero -->
     <section class="hero">
