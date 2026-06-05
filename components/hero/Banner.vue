@@ -25,7 +25,7 @@ const isOpen = ref(false);
       </a>
       <a href="https://thegovlab.org" target="_blank" rel="noopener" class="banner__link">
         <img src="/images/arrow.svg" alt="" class="banner__icon" />
-        The Gov Lab
+        The GovLab
       </a>
     </div>
 
@@ -54,7 +54,7 @@ const isOpen = ref(false);
         </a>
         <a href="https://thegovlab.org" target="_blank" rel="noopener" class="banner__link">
           <img src="/images/arrow.svg" alt="" class="banner__icon" />
-          The Gov Lab
+          The GovLab
         </a>
       </div>
     </div>
