@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/css/main.css'],
-  modules: ['nuxt-gtag', 'nuxt-build-cache', 'nuxt-lazy-hydrate'],
+  modules: ['nuxt-gtag', 'nuxt-lazy-hydrate'],
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
