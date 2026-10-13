@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl } from '~/utils/directus';
+import { fetchAiForImpact, fetchProjectCount, filterPublished, assetUrl, fetchModal } from '~/utils/directus';
 import { stripHtml, truncateMeta } from '~/utils/seo';
 
 const { data: page } = await useAsyncData('ai-for-impact', fetchAiForImpact);
 const { data: projectCount } = await useAsyncData('project-count', fetchProjectCount);
+/* Fetched in the browser, not at prerender time, so publishing or unpublishing
+   the modal in Directus takes effect without a rebuild */
+const { data: modal } = useLazyAsyncData('ai-for-impact-modal', fetchModal, { server: false });
 
 const description = computed(() =>
   truncateMeta(
@@ -40,6 +43,9 @@ const aboutParagraphs = computed(() =>
 
 <template>
   <div v-if="page" class="page">
+    <!-- Teleports to <body>; kept inside .page so the page has a single root -->
+    <UiEnrollModal v-if="modal" :modal="modal" />
+
     <!-- Hero -->
     <section class="hero">
       <div class="hero__content">

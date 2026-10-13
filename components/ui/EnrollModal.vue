@@ -217,7 +217,12 @@ onUnmounted(() => {
   margin: 0;
 }
 
-.modal__title :deep(h2:first-child) {
+/* The Directus rich-text editor appends an empty <p> after the headings */
+.modal__title :deep(p:empty) {
+  display: none;
+}
+
+.modal__title :deep(h2:first-of-type) {
   color: var(--color-dark, #1f2d45);
   font-family: var(--font-sans);
   font-size: 32px;
@@ -227,8 +232,8 @@ onUnmounted(() => {
   margin: 0;
 }
 
-.modal__title :deep(h2:first-child em),
-.modal__title :deep(h2:first-child i) {
+.modal__title :deep(h2:first-of-type em),
+.modal__title :deep(h2:first-of-type i) {
   color: var(--color-primary, #376bd1);
   font-family: var(--font-macro);
   font-size: 32px;
@@ -237,7 +242,7 @@ onUnmounted(() => {
   line-height: 40px;
 }
 
-.modal__title :deep(h2:last-child) {
+.modal__title :deep(h2:nth-of-type(2)) {
   color: var(--blue, #376BD1);
   font-family: "Public Sans";
   font-size: 20px;
@@ -354,18 +359,18 @@ onUnmounted(() => {
     letter-spacing: 0.24px;
   }
 
-  .modal__title :deep(h2:first-child) {
+  .modal__title :deep(h2:first-of-type) {
     font-size: 22px;
     line-height: 30px;
   }
 
-  .modal__title :deep(h2:first-child em),
-  .modal__title :deep(h2:first-child i) {
+  .modal__title :deep(h2:first-of-type em),
+  .modal__title :deep(h2:first-of-type i) {
     font-size: 22px;
     line-height: 30px;
   }
 
-  .modal__title :deep(h2:last-child) {
+  .modal__title :deep(h2:nth-of-type(2)) {
     font-size: 16px;
   }
 
