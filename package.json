@@ -15,7 +15,6 @@
     "dompurify": "^3.3.3",
     "marked": "^17.0.4",
     "nuxt": "^4.4.2",
-    "nuxt-build-cache": "^0.1.1",
     "nuxt-gtag": "^4.1.0",
     "nuxt-lazy-hydrate": "^1.0.0",
     "vue": "^3.5.30",
